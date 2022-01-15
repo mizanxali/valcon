@@ -62,7 +62,9 @@ class ProfileService {
       );
 
       const profilesToShow = profiles.filter(
-        (profile) => !currentUser?.matches.includes(profile.user)
+        (profile) =>
+          !currentUser?.matches.includes(profile.user) &&
+          !currentUser?.swipes.includes(profile.user)
       );
 
       return profilesToShow;

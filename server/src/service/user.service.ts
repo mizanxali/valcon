@@ -40,7 +40,13 @@ class UserService {
 
       await newProfile.save();
 
-      const token = signJwt(userDoc.toJSON());
+      const payload = {
+        _id: userDoc._id,
+        email: userDoc.email,
+        createdAt: userDoc.createdAt,
+      };
+
+      const token = signJwt(payload);
 
       context.res.cookie('accessToken', token, {
         maxAge: 3.154e10,
@@ -70,7 +76,13 @@ class UserService {
 
       if (!passwordIsValid) throw new UserInputError('Invalid password');
 
-      const token = signJwt(user.toJSON());
+      const payload = {
+        _id: user._id,
+        email: user.email,
+        createdAt: user.createdAt,
+      };
+
+      const token = signJwt(payload);
 
       context.res.cookie('accessToken', token, {
         maxAge: 3.154e10,
