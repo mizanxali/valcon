@@ -1,5 +1,6 @@
 import { ApolloError } from 'apollo-server';
 import { EditProfileInput, ProfileModel } from '../schema/profile.schema';
+import { UserModel } from '../schema/user.schema';
 import Context from '../types/context';
 
 class ProfileService {
@@ -52,13 +53,19 @@ class ProfileService {
     const { user } = context;
 
     try {
+      const currentUser = await UserModel.findById(user?._id);
+
       const profiles = await ProfileModel.find(
         { $and: [{ user: { $ne: user?._id } }, { discoverable: true }] },
         { tagline: 0 },
-        { limit: 10 }
+        { limit: 50 }
       );
 
-      return profiles;
+      const profilesToShow = profiles.filter(
+        (profile) => !currentUser?.matches.includes(profile.user)
+      );
+
+      return profilesToShow;
     } catch (err) {
       console.log(err);
       throw new ApolloError('Server error');
