@@ -8,21 +8,25 @@ export class Profile {
   @Field(() => String)
   _id: string;
 
+  @Field(() => Boolean)
+  @prop({ required: true })
+  discoverable: boolean;
+
   @Field(() => String)
   @prop({ required: true, ref: () => User })
   user: Ref<User>;
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   @prop()
-  riotID: string;
+  riotID?: string;
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   @prop()
-  tagline: string;
+  tagline?: string;
 
-  @Field(() => [String])
+  @Field(() => [String], { nullable: true })
   @prop({ type: () => [String] })
-  clips: string[];
+  clips?: string[];
 }
 
 export const ProfileModel = getModelForClass(Profile);

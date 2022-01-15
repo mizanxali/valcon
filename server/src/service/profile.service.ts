@@ -7,26 +7,62 @@ class ProfileService {
     const { riotID, tagline, clips } = input;
     const { user } = context;
 
-    const profile = await ProfileModel.findOne({ user: user?._id });
+    try {
+      const profile = await ProfileModel.findOne({ user: user?._id });
 
-    if (!profile) throw new ApolloError('Server error');
+      if (!profile) throw new ApolloError('Server error');
 
-    if (riotID) profile.riotID = riotID;
-    if (tagline) profile.tagline = tagline;
-    if (clips) profile.clips = clips;
+      if (riotID) profile.riotID = riotID;
+      if (tagline) profile.tagline = tagline;
+      if (clips) profile.clips = clips;
 
-    await profile.save();
+      if (
+        profile.riotID &&
+        profile.tagline &&
+        profile.clips &&
+        profile.clips.length > 0
+      )
+        profile.discoverable = true;
 
-    return profile;
+      await profile.save();
+
+      return profile;
+    } catch (err) {
+      console.log(err);
+      throw new ApolloError('Server error');
+    }
   }
 
   async getProfile(context: Context) {
     const { user } = context;
-    const profile = await ProfileModel.findOne({ user: user?._id });
 
-    if (!profile) throw new ApolloError('Server error');
+    try {
+      const profile = await ProfileModel.findOne({ user: user?._id });
 
-    return profile;
+      if (!profile) throw new ApolloError('Server error');
+
+      return profile;
+    } catch (err) {
+      console.log(err);
+      throw new ApolloError('Server error');
+    }
+  }
+
+  async getProfiles(context: Context) {
+    const { user } = context;
+
+    try {
+      const profiles = await ProfileModel.find(
+        { $and: [{ user: { $ne: user?._id } }, { discoverable: true }] },
+        { tagline: 0 },
+        { limit: 10 }
+      );
+
+      return profiles;
+    } catch (err) {
+      console.log(err);
+      throw new ApolloError('Server error');
+    }
   }
 }
 
