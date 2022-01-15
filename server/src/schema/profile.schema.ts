@@ -91,4 +91,7 @@ export class GetProfilesInput {
   @Max(21)
   @Field(() => Int)
   maxRank: number;
+
+  @Field(() => [String])
+  servers: string[];
 }

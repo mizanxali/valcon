@@ -69,7 +69,7 @@ class ProfileService {
   }
 
   async getProfiles(input: GetProfilesInput, user: User) {
-    const { minRank, maxRank } = input;
+    const { minRank, maxRank, servers } = input;
 
     try {
       const currentUser = await UserModel.findById(user._id);
@@ -82,7 +82,7 @@ class ProfileService {
         - user != currentUser
         - discoverable == true
         - minRank <= Rank <= maxRank
-        - server == currentUser.server
+        - server is equal to any of the selected ones
         - lookingToPlay == currentUser.lookingToPlay */
 
       const profiles = await ProfileModel.find(
@@ -92,7 +92,7 @@ class ProfileService {
             { discoverable: true },
             { rank: { $gte: minRank } },
             { rank: { $lte: maxRank } },
-            { server: currentUserProfile.server },
+            { server: { $in: servers } },
             { lookingToPlay: currentUserProfile.lookingToPlay },
           ],
         },
