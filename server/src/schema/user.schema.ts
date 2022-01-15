@@ -23,6 +23,7 @@ export class User {
   @prop({ required: true })
   password: string;
 
+  @Field(() => String)
   @prop()
   createdAt: string;
 }
