@@ -80,6 +80,7 @@ class ProfileService {
 
       /* Query for profiles where:
         - user != currentUser
+        - user has not already been swiped on/matched with currentUser
         - discoverable == true
         - minRank <= Rank <= maxRank
         - server is equal to any of the selected ones
@@ -89,6 +90,9 @@ class ProfileService {
         {
           $and: [
             { user: { $ne: user._id } },
+            { user: { $nin: currentUser.matches } },
+            { user: { $nin: currentUser.rightSwipes } },
+            { user: { $nin: currentUser.leftSwipes } },
             { discoverable: true },
             { rank: { $gte: minRank } },
             { rank: { $lte: maxRank } },
@@ -100,13 +104,7 @@ class ProfileService {
         { limit: 50 }
       );
 
-      const profilesToShow = profiles.filter(
-        (profile) =>
-          !currentUser.matches.includes(profile.user) &&
-          !currentUser.swipes.includes(profile.user)
-      );
-
-      return profilesToShow;
+      return profiles;
     } catch (err) {
       console.log(err);
       throw new ApolloError('Server error');

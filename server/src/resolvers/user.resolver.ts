@@ -1,8 +1,9 @@
 import { Arg, Authorized, Ctx, Mutation, Query, Resolver } from 'type-graphql';
 import {
   CreateUserInput,
+  LeftSwipeInput,
   LoginInput,
-  SwipeInput,
+  RightSwipeInput,
   User,
 } from '../schema/user.schema';
 import UserService from '../service/user.service';
@@ -26,9 +27,16 @@ export default class UserResolver {
 
   @Authorized()
   @Mutation(() => String)
-  swipe(@Arg('input') input: SwipeInput, @Ctx() context: Context) {
+  rightSwipe(@Arg('input') input: RightSwipeInput, @Ctx() context: Context) {
     const user = context.user!;
-    return this.userService.swipe(input, user);
+    return this.userService.rightSwipe(input, user);
+  }
+
+  @Authorized()
+  @Mutation(() => String)
+  leftSwipe(@Arg('input') input: LeftSwipeInput, @Ctx() context: Context) {
+    const user = context.user!;
+    return this.userService.leftSwipe(input, user);
   }
 
   @Query(() => User)

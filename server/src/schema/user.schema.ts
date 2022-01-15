@@ -15,13 +15,16 @@ export class User {
   password: string;
 
   @prop({ ref: () => User })
-  swipes: Ref<User>[];
+  rightSwipes: Ref<User>[];
+
+  @prop({ ref: () => User })
+  leftSwipes: Ref<User>[];
 
   @prop({ ref: () => User })
   matches: Ref<User>[];
 
   @Field(() => String)
-  @prop()
+  @prop({ required: true })
   createdAt: string;
 }
 
@@ -50,7 +53,13 @@ export class LoginInput {
 }
 
 @InputType()
-export class SwipeInput {
+export class RightSwipeInput {
   @Field(() => String)
-  swipedID: string;
+  rightSwipedID: string;
+}
+
+@InputType()
+export class LeftSwipeInput {
+  @Field(() => String)
+  leftSwipedID: string;
 }

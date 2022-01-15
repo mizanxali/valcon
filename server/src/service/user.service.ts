@@ -3,8 +3,9 @@ import bcrypt from 'bcryptjs';
 import { ProfileModel } from '../schema/profile.schema';
 import {
   CreateUserInput,
+  LeftSwipeInput,
   LoginInput,
-  SwipeInput,
+  RightSwipeInput,
   User,
   UserModel,
 } from '../schema/user.schema';
@@ -25,8 +26,6 @@ class UserService {
         email,
         password: hashedPassword,
         createdAt: new Date().toISOString(),
-        swipes: [],
-        matches: [],
       });
 
       const userDoc = await newUser.save();
@@ -98,8 +97,8 @@ class UserService {
     }
   }
 
-  async swipe(input: SwipeInput, user: User) {
-    const { swipedID } = input;
+  async rightSwipe(input: RightSwipeInput, user: User) {
+    const { rightSwipedID } = input;
 
     try {
       const currentUser = await UserModel.findById(user._id);
@@ -107,33 +106,61 @@ class UserService {
       if (!currentUser) throw new ApolloError('User not found');
 
       //check for match
-      const swipedUser = await UserModel.findById(swipedID);
-      if (!swipedUser) throw new ApolloError('Swiped user not found');
+      const rightSwipedUser = await UserModel.findById(rightSwipedID);
+      if (!rightSwipedUser) throw new ApolloError('rightSwiped user not found');
 
-      if (swipedUser._id.toString() === currentUser._id.toString())
-        throw new ApolloError('Cannot swipe on yourself');
+      if (rightSwipedUser._id.toString() === currentUser._id.toString())
+        throw new ApolloError('Cannot rightSwipe on yourself');
 
-      if (currentUser.swipes.includes(swipedUser._id))
-        throw new ApolloError('Cannot swipe on someone again');
+      if (currentUser.rightSwipes.includes(rightSwipedUser._id))
+        throw new ApolloError('Cannot rightSwipe on someone again');
 
-      if (swipedUser.swipes.includes(currentUser._id)) {
+      if (rightSwipedUser.rightSwipes.includes(currentUser._id)) {
         //its a match
-        const removeIndex = swipedUser.swipes.indexOf(user._id);
-        swipedUser.swipes.splice(removeIndex, 1);
-        swipedUser.matches.push(user._id);
-        currentUser.matches.push(swipedUser._id);
+        const removeIndex = rightSwipedUser.rightSwipes.indexOf(user._id);
+        rightSwipedUser.rightSwipes.splice(removeIndex, 1);
+        rightSwipedUser.matches.push(user._id);
+        currentUser.matches.push(rightSwipedUser._id);
 
         await currentUser.save();
-        await swipedUser.save();
+        await rightSwipedUser.save();
 
         return 'Match';
       } else {
         //not a match
-        currentUser.swipes.push(swipedUser._id);
+        currentUser.rightSwipes.push(rightSwipedUser._id);
 
         await currentUser.save();
-        return 'Swipe';
+        return 'Right Swiped';
       }
+    } catch (err) {
+      console.log(err);
+      throw new ApolloError('Server error');
+    }
+  }
+
+  async leftSwipe(input: LeftSwipeInput, user: User) {
+    const { leftSwipedID } = input;
+
+    try {
+      const currentUser = await UserModel.findById(user._id);
+
+      if (!currentUser) throw new ApolloError('User not found');
+
+      //check for match
+      const leftSwipedUser = await UserModel.findById(leftSwipedID);
+      if (!leftSwipedUser) throw new ApolloError('leftSwiped user not found');
+
+      if (leftSwipedUser._id.toString() === currentUser._id.toString())
+        throw new ApolloError('Cannot leftSwipe on yourself');
+
+      if (currentUser.leftSwipes.includes(leftSwipedUser._id))
+        throw new ApolloError('Cannot leftSwipe on someone again');
+
+      currentUser.leftSwipes.push(leftSwipedUser._id);
+
+      await currentUser.save();
+      return 'Left Swiped';
     } catch (err) {
       console.log(err);
       throw new ApolloError('Server error');
