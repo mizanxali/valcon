@@ -1,15 +1,13 @@
 import { ApolloError } from 'apollo-server';
 import { EditProfileInput, ProfileModel } from '../schema/profile.schema';
-import { UserModel } from '../schema/user.schema';
-import Context from '../types/context';
+import { User, UserModel } from '../schema/user.schema';
 
 class ProfileService {
-  async editProfile(input: EditProfileInput, context: Context) {
+  async editProfile(input: EditProfileInput, user: User) {
     const { riotID, tagline, clips } = input;
-    const { user } = context;
 
     try {
-      const profile = await ProfileModel.findOne({ user: user?._id });
+      const profile = await ProfileModel.findOne({ user: user._id });
 
       if (!profile) throw new ApolloError('Profile not found');
 
@@ -34,11 +32,9 @@ class ProfileService {
     }
   }
 
-  async getProfile(context: Context) {
-    const { user } = context;
-
+  async getProfile(user: User) {
     try {
-      const profile = await ProfileModel.findOne({ user: user?._id });
+      const profile = await ProfileModel.findOne({ user: user._id });
 
       if (!profile) throw new ApolloError('Profile not found');
 
@@ -49,22 +45,22 @@ class ProfileService {
     }
   }
 
-  async getProfiles(context: Context) {
-    const { user } = context;
-
+  async getProfiles(user: User) {
     try {
-      const currentUser = await UserModel.findById(user?._id);
+      const currentUser = await UserModel.findById(user._id);
+
+      if (!currentUser) throw new ApolloError('User not found');
 
       const profiles = await ProfileModel.find(
-        { $and: [{ user: { $ne: user?._id } }, { discoverable: true }] },
+        { $and: [{ user: { $ne: user._id } }, { discoverable: true }] },
         { tagline: 0 },
         { limit: 50 }
       );
 
       const profilesToShow = profiles.filter(
         (profile) =>
-          !currentUser?.matches.includes(profile.user) &&
-          !currentUser?.swipes.includes(profile.user)
+          !currentUser.matches.includes(profile.user) &&
+          !currentUser.swipes.includes(profile.user)
       );
 
       return profilesToShow;

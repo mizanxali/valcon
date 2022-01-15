@@ -12,11 +12,12 @@ import { User } from './schema/user.schema';
 import Context from './types/context';
 import { connectDB } from './utils/db';
 import { verifyJwt } from './utils/jwt';
+import authChecker from './utils/authChecker';
 
 const main = async () => {
   const schema = await buildSchema({
     resolvers,
-    // authChecker,
+    authChecker,
   });
 
   const app = express();

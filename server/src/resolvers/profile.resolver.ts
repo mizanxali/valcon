@@ -1,4 +1,4 @@
-import { Arg, Ctx, Mutation, Query, Resolver } from 'type-graphql';
+import { Arg, Authorized, Ctx, Mutation, Query, Resolver } from 'type-graphql';
 import { EditProfileInput, Profile } from '../schema/profile.schema';
 import ProfileService from '../service/profile.service';
 import Context from '../types/context';
@@ -9,18 +9,24 @@ export default class ProfileResolver {
     this.profileService = new ProfileService();
   }
 
+  @Authorized()
   @Mutation(() => Profile)
   editProfile(@Arg('input') input: EditProfileInput, @Ctx() context: Context) {
-    return this.profileService.editProfile(input, context);
+    const user = context.user!;
+    return this.profileService.editProfile(input, user);
   }
 
+  @Authorized()
   @Query(() => Profile)
   getProfile(@Ctx() context: Context) {
-    return this.profileService.getProfile(context);
+    const user = context.user!;
+    return this.profileService.getProfile(user);
   }
 
+  @Authorized()
   @Query(() => [Profile])
   getProfiles(@Ctx() context: Context) {
-    return this.profileService.getProfiles(context);
+    const user = context.user!;
+    return this.profileService.getProfiles(user);
   }
 }

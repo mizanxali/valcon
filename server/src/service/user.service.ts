@@ -5,6 +5,7 @@ import {
   CreateUserInput,
   LoginInput,
   SwipeInput,
+  User,
   UserModel,
 } from '../schema/user.schema';
 import Context from '../types/context';
@@ -100,12 +101,11 @@ class UserService {
     }
   }
 
-  async swipe(input: SwipeInput, context: Context) {
+  async swipe(input: SwipeInput, user: User) {
     const { swipedID } = input;
-    const { user } = context;
 
     try {
-      const currentUser = await UserModel.findById(user?._id);
+      const currentUser = await UserModel.findById(user._id);
 
       if (!currentUser) throw new ApolloError('User not found');
 
@@ -116,11 +116,14 @@ class UserService {
       if (swipedUser._id.toString() === currentUser._id.toString())
         throw new ApolloError('Cannot swipe on yourself');
 
+      if (currentUser.swipes.includes(swipedUser._id))
+        throw new ApolloError('Cannot swipe on someone again');
+
       if (swipedUser.swipes.includes(currentUser._id)) {
         //its a match
-        const removeIndex = swipedUser.swipes.indexOf(user?._id);
+        const removeIndex = swipedUser.swipes.indexOf(user._id);
         swipedUser.swipes.splice(removeIndex, 1);
-        swipedUser.matches.push(user?._id);
+        swipedUser.matches.push(user._id);
         currentUser.matches.push(swipedUser._id);
 
         await currentUser.save();
