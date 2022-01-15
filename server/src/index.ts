@@ -4,7 +4,6 @@ import {
 } from 'apollo-server-core';
 import { ApolloServer } from 'apollo-server-express';
 import cookieParser from 'cookie-parser';
-import dotenv from 'dotenv';
 import express from 'express';
 import 'reflect-metadata';
 import { buildSchema } from 'type-graphql';
@@ -13,7 +12,6 @@ import { User } from './schema/user.schema';
 import Context from './types/context';
 import { connectDB } from './utils/db';
 import { verifyJwt } from './utils/jwt';
-dotenv.config();
 
 const main = async () => {
   const schema = await buildSchema({
