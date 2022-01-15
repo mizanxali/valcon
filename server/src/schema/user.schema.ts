@@ -1,5 +1,4 @@
-import bcrypt from 'bcryptjs';
-import { getModelForClass, pre, prop, Ref } from '@typegoose/typegoose';
+import { getModelForClass, prop, Ref } from '@typegoose/typegoose';
 import { IsEmail, MinLength } from 'class-validator';
 import { Field, InputType, ObjectType } from 'type-graphql';
 
@@ -48,4 +47,10 @@ export class LoginInput {
   @MinLength(6, { message: 'Password must be at least 6 characters long' })
   @Field(() => String)
   password: string;
+}
+
+@InputType()
+export class SwipeInput {
+  @Field(() => String)
+  swipedID: string;
 }

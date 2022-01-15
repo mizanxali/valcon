@@ -10,7 +10,7 @@ class ProfileService {
     try {
       const profile = await ProfileModel.findOne({ user: user?._id });
 
-      if (!profile) throw new ApolloError('Server error');
+      if (!profile) throw new ApolloError('Profile not found');
 
       if (riotID) profile.riotID = riotID;
       if (tagline) profile.tagline = tagline;
@@ -39,7 +39,7 @@ class ProfileService {
     try {
       const profile = await ProfileModel.findOne({ user: user?._id });
 
-      if (!profile) throw new ApolloError('Server error');
+      if (!profile) throw new ApolloError('Profile not found');
 
       return profile;
     } catch (err) {

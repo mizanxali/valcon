@@ -1,5 +1,10 @@
 import { Arg, Ctx, Mutation, Query, Resolver } from 'type-graphql';
-import { CreateUserInput, LoginInput, User } from '../schema/user.schema';
+import {
+  CreateUserInput,
+  LoginInput,
+  SwipeInput,
+  User,
+} from '../schema/user.schema';
 import UserService from '../service/user.service';
 import Context from '../types/context';
 
@@ -17,6 +22,11 @@ export default class UserResolver {
   @Mutation(() => String)
   login(@Arg('input') input: LoginInput, @Ctx() context: Context) {
     return this.userService.login(input, context);
+  }
+
+  @Mutation(() => String)
+  swipe(@Arg('input') input: SwipeInput, @Ctx() context: Context) {
+    return this.userService.swipe(input, context);
   }
 
   @Query(() => User)
