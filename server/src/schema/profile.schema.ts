@@ -1,6 +1,6 @@
 import { getModelForClass, prop, Ref } from '@typegoose/typegoose';
-import { MaxLength } from 'class-validator';
-import { Field, InputType, ObjectType } from 'type-graphql';
+import { Max, MaxLength, Min } from 'class-validator';
+import { Field, InputType, Int, ObjectType } from 'type-graphql';
 import { User } from './user.schema';
 
 @ObjectType()
@@ -40,9 +40,9 @@ export class Profile {
   @prop()
   lookingToPlay?: string;
 
-  @Field(() => String, { nullable: true })
+  @Field(() => Int, { nullable: true })
   @prop()
-  rank?: string;
+  rank?: number;
 
   @Field(() => String, { nullable: true })
   @prop()
@@ -71,9 +71,24 @@ export class EditProfileInput {
   @Field(() => String, { nullable: true })
   lookingToPlay?: string;
 
-  @Field(() => String, { nullable: true })
-  rank?: string;
+  @Min(0)
+  @Max(21)
+  @Field(() => Int, { nullable: true })
+  rank?: number;
 
   @Field(() => String, { nullable: true })
   server?: string;
+}
+
+@InputType()
+export class GetProfilesInput {
+  @Min(0)
+  @Max(21)
+  @Field(() => Int)
+  minRank: number;
+
+  @Min(0)
+  @Max(21)
+  @Field(() => Int)
+  maxRank: number;
 }

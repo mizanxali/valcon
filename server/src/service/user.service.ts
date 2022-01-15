@@ -33,14 +33,6 @@ class UserService {
 
       const newProfile = new ProfileModel({
         user: userDoc._id,
-        riotID: '',
-        tagline: '',
-        clips: [],
-        agents: [],
-        favoriteMap: '',
-        lookingToPlay: '',
-        rank: '',
-        server: '',
         discoverable: false,
       });
 
