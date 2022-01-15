@@ -31,9 +31,17 @@ export const UserModel = getModelForClass(User);
 
 @InputType()
 export class CreateUserInput {
+  @IsEmail()
   @Field(() => String)
-  name: string;
+  email: string;
 
+  @MinLength(6, { message: 'Password must be at least 6 characters long' })
+  @Field(() => String)
+  password: string;
+}
+
+@InputType()
+export class LoginInput {
   @IsEmail()
   @Field(() => String)
   email: string;

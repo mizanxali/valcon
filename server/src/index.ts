@@ -1,12 +1,12 @@
+import dotenv from 'dotenv';
+dotenv.config();
 import { ApolloServer } from 'apollo-server-express';
 import cookieParser from 'cookie-parser';
-import dotenv from 'dotenv';
 import express from 'express';
 import 'reflect-metadata';
 import { buildSchema } from 'type-graphql';
 import { resolvers } from './resolvers';
 import { connectDB } from './utils/db';
-dotenv.config();
 
 const main = async () => {
   const schema = await buildSchema({
