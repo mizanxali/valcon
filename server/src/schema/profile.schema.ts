@@ -27,6 +27,26 @@ export class Profile {
   @Field(() => [String], { nullable: true })
   @prop({ type: () => [String] })
   clips?: string[];
+
+  @Field(() => [String], { nullable: true })
+  @prop({ type: () => [String] })
+  agents?: string[];
+
+  @Field(() => String, { nullable: true })
+  @prop()
+  favoriteMap?: string;
+
+  @Field(() => String, { nullable: true })
+  @prop()
+  lookingToPlay?: string;
+
+  @Field(() => String, { nullable: true })
+  @prop()
+  rank?: string;
+
+  @Field(() => String, { nullable: true })
+  @prop()
+  server?: string;
 }
 
 export const ProfileModel = getModelForClass(Profile);
@@ -41,4 +61,19 @@ export class EditProfileInput {
 
   @Field(() => [String], { nullable: true })
   clips?: string[];
+
+  @Field(() => [String], { nullable: true })
+  agents?: string[];
+
+  @Field(() => String, { nullable: true })
+  favoriteMap?: string;
+
+  @Field(() => String, { nullable: true })
+  lookingToPlay?: string;
+
+  @Field(() => String, { nullable: true })
+  rank?: string;
+
+  @Field(() => String, { nullable: true })
+  server?: string;
 }

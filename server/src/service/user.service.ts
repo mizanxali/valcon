@@ -36,6 +36,11 @@ class UserService {
         riotID: '',
         tagline: '',
         clips: [],
+        agents: [],
+        favoriteMap: '',
+        lookingToPlay: '',
+        rank: '',
+        server: '',
         discoverable: false,
       });
 

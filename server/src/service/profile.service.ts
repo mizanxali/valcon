@@ -4,7 +4,16 @@ import { User, UserModel } from '../schema/user.schema';
 
 class ProfileService {
   async editProfile(input: EditProfileInput, user: User) {
-    const { riotID, tagline, clips } = input;
+    const {
+      riotID,
+      tagline,
+      clips,
+      agents,
+      favoriteMap,
+      lookingToPlay,
+      rank,
+      server,
+    } = input;
 
     try {
       const profile = await ProfileModel.findOne({ user: user._id });
@@ -14,12 +23,23 @@ class ProfileService {
       if (riotID) profile.riotID = riotID;
       if (tagline) profile.tagline = tagline;
       if (clips) profile.clips = clips;
+      if (agents) profile.agents = agents;
+      if (favoriteMap) profile.favoriteMap = favoriteMap;
+      if (lookingToPlay) profile.lookingToPlay = lookingToPlay;
+      if (rank) profile.rank = rank;
+      if (server) profile.server = server;
 
       if (
         profile.riotID &&
         profile.tagline &&
         profile.clips &&
-        profile.clips.length > 0
+        profile.clips.length > 0 &&
+        profile.agents &&
+        profile.agents.length > 0 &&
+        profile.favoriteMap &&
+        profile.lookingToPlay &&
+        profile.rank &&
+        profile.server
       )
         profile.discoverable = true;
 
