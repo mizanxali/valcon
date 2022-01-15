@@ -1,5 +1,5 @@
 import bcrypt from 'bcryptjs';
-import { getModelForClass, pre, prop } from '@typegoose/typegoose';
+import { getModelForClass, pre, prop, Ref } from '@typegoose/typegoose';
 import { IsEmail, MinLength } from 'class-validator';
 import { Field, InputType, ObjectType } from 'type-graphql';
 
@@ -14,6 +14,12 @@ export class User {
 
   @prop({ required: true })
   password: string;
+
+  @prop({ ref: () => User })
+  swipes: Ref<User>[];
+
+  @prop({ ref: () => User })
+  matches: Ref<User>[];
 
   @Field(() => String)
   @prop()

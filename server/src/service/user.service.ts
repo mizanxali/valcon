@@ -18,6 +18,8 @@ class UserService {
       email,
       password: hashedPassword,
       createdAt: new Date().toISOString(),
+      swipes: [],
+      matches: [],
     });
 
     const userDoc = await newUser.save();
