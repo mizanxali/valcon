@@ -19,7 +19,14 @@ const App = () => {
     <ApolloProvider client={client}>
       <AuthProvider>
         <NavigationContainer>
-          <Redirect />
+          {/* <Redirect /> */}
+          <Stack.Navigator>
+            <Stack.Screen
+              name="Home"
+              component={HomeScreen}
+              options={{headerShown: false}}
+            />
+          </Stack.Navigator>
         </NavigationContainer>
       </AuthProvider>
     </ApolloProvider>

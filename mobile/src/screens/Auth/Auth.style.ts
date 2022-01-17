@@ -4,6 +4,7 @@ import theme from '../../theme';
 export default StyleSheet.create({
   screen: {
     backgroundColor: theme.colors.background,
+    height: '100%',
   },
   title: {
     color: theme.colors.primary,

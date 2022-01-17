@@ -6,8 +6,4 @@ export default StyleSheet.create({
     backgroundColor: theme.colors.background,
     height: '100%',
   },
-  tabBar: {
-    backgroundColor: theme.colors.background,
-    borderTopWidth: 0,
-  },
 });
