@@ -1,7 +1,8 @@
 import {useMutation} from '@apollo/client';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Button, Text, TextInput, View} from 'react-native';
+import {AuthContext} from '../../context/auth';
 import {CREATE_USER_MUTATION, LOGIN_MUTATION} from '../../graphql/mutations';
 import theme from '../../theme';
 import {RootStackParamList} from '../../types';
@@ -10,6 +11,8 @@ import styles from './Auth.style';
 const AuthScreen = ({
   navigation,
 }: NativeStackScreenProps<RootStackParamList, 'Auth'>) => {
+  const context = useContext(AuthContext);
+
   const [isLogin, setIsLogin] = useState(true);
 
   const [email, setEmail] = useState('');
@@ -17,7 +20,7 @@ const AuthScreen = ({
 
   const [signIn] = useMutation(LOGIN_MUTATION, {
     update(_, result) {
-      console.log(result);
+      context.login(result.data.login);
       navigation.replace('Home');
     },
     onError(err) {
@@ -31,7 +34,7 @@ const AuthScreen = ({
 
   const [signUp] = useMutation(CREATE_USER_MUTATION, {
     update(proxy, result) {
-      console.log(result);
+      context.login(result.data.createUser);
       navigation.navigate('Home');
     },
     onError(err) {
