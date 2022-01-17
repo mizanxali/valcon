@@ -1,11 +1,13 @@
-import React from 'react';
-import {ApolloClient, InMemoryCache, ApolloProvider} from '@apollo/client';
-import AuthScreen from './screens/Auth/Auth';
+import {ApolloClient, ApolloProvider, InMemoryCache} from '@apollo/client';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import React from 'react';
+import AuthScreen from './screens/Auth/Auth';
+import HomeScreen from './screens/Home/Home';
+import {RootStackParamList} from './types';
 
 const client = new ApolloClient({
-  uri: 'localhost:4000/graphql',
+  uri: 'http://192.168.0.103:4000/graphql',
   cache: new InMemoryCache(),
 });
 
@@ -21,14 +23,15 @@ const App = () => {
             component={AuthScreen}
             options={{headerShown: false}}
           />
+          <Stack.Screen
+            name="Home"
+            component={HomeScreen}
+            options={{headerShown: false}}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </ApolloProvider>
   );
-};
-
-export type RootStackParamList = {
-  Auth: undefined;
 };
 
 export default App;
