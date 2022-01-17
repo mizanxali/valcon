@@ -3,7 +3,6 @@ import {
   ApolloServerPluginLandingPageProductionDefault,
 } from 'apollo-server-core';
 import { ApolloServer } from 'apollo-server-express';
-import cookieParser from 'cookie-parser';
 import express from 'express';
 import 'reflect-metadata';
 import { buildSchema } from 'type-graphql';
@@ -21,13 +20,12 @@ const main = async () => {
   });
 
   const app = express();
-  app.use(cookieParser());
 
   const server = new ApolloServer({
     schema,
     context: (ctx: Context) => {
-      if (ctx.req.cookies.accessToken) {
-        const user = verifyJwt<User>(ctx.req.cookies.accessToken);
+      if (ctx.req.headers.accesstoken) {
+        const user = verifyJwt<User>(ctx.req.headers.accesstoken as string);
         ctx.user = user;
       }
       return ctx;

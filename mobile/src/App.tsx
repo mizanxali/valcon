@@ -1,4 +1,9 @@
-import {ApolloClient, ApolloProvider, InMemoryCache} from '@apollo/client';
+import {
+  ApolloClient,
+  ApolloProvider,
+  createHttpLink,
+  InMemoryCache,
+} from '@apollo/client';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React, {useContext} from 'react';
@@ -7,8 +12,16 @@ import AuthScreen from './screens/Auth/Auth';
 import HomeScreen from './screens/Home/Home';
 import {RootStackParamList} from './types';
 
-const client = new ApolloClient({
+const link = createHttpLink({
   uri: 'http://192.168.0.103:4000/graphql',
+  headers: {
+    accesstoken:
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUzMTg1YjJlNDgyZTg4YjA2MTUyZmEiLCJlbWFpbCI6InNleHlAb2suY29tIiwiY3JlYXRlZEF0IjoiMjAyMi0wMS0xNVQxODo1NDoxOS40MzhaIiwiaWF0IjoxNjQyNDU1NjM5LCJleHAiOjE2NDI4MTU2Mzl9.yG1yrCHHGQaGOvsVhoerI9bkIDF-xOx5k58Kkh_SKGk',
+  },
+});
+
+const client = new ApolloClient({
+  link,
   cache: new InMemoryCache(),
 });
 

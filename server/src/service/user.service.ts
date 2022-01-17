@@ -45,15 +45,6 @@ class UserService {
 
       const token = signJwt(payload);
 
-      context.res.cookie('accessToken', token, {
-        maxAge: 3.154e10,
-        httpOnly: true,
-        domain: 'localhost',
-        path: '/',
-        sameSite: 'strict',
-        secure: process.env.NODE_ENV === 'production',
-      });
-
       return token;
     } catch (err) {
       console.log(err);
@@ -80,15 +71,6 @@ class UserService {
       };
 
       const token = signJwt(payload);
-
-      context.res.cookie('accessToken', token, {
-        maxAge: 3.154e10,
-        httpOnly: true,
-        domain: 'localhost',
-        path: '/',
-        sameSite: 'strict',
-        secure: process.env.NODE_ENV === 'production',
-      });
 
       return token;
     } catch (err) {
