@@ -54,26 +54,9 @@ const ViewProfile = ({navigation, data}: IViewProfileProps) => {
           </View>
         )}
         <View style={styles.profileField}>
-          <Text style={styles.heading}>Favorite Map</Text>
-          {favoriteMap ? (
-            <Text style={styles.value}>favoriteMap</Text>
-          ) : (
-            <Text style={styles.valueNotSelected}>Not selected</Text>
-          )}
-        </View>
-        <View style={styles.profileField}>
-          <Text style={styles.heading}>Looking to play</Text>
-          {lookingToPlay ? (
-            <Text style={styles.value}>lookingToPlay</Text>
-          ) : (
-            <Text style={styles.valueNotSelected}>Not selected</Text>
-          )}
-        </View>
-        <View style={styles.profileField}>
           <Text style={styles.heading}>Rank</Text>
-
           {rank ? (
-            <Text style={styles.value}>RANKS[rank]</Text>
+            <Text style={styles.value}>{RANKS[rank]}</Text>
           ) : (
             <Text style={styles.valueNotSelected}>Not selected</Text>
           )}
@@ -81,7 +64,23 @@ const ViewProfile = ({navigation, data}: IViewProfileProps) => {
         <View style={styles.profileField}>
           <Text style={styles.heading}>Server</Text>
           {server ? (
-            <Text style={styles.value}>server</Text>
+            <Text style={styles.value}>{server}</Text>
+          ) : (
+            <Text style={styles.valueNotSelected}>Not selected</Text>
+          )}
+        </View>
+        <View style={styles.profileField}>
+          <Text style={styles.heading}>Looking to play</Text>
+          {lookingToPlay ? (
+            <Text style={styles.value}>{lookingToPlay}</Text>
+          ) : (
+            <Text style={styles.valueNotSelected}>Not selected</Text>
+          )}
+        </View>
+        <View style={styles.profileField}>
+          <Text style={styles.heading}>Favorite map</Text>
+          {favoriteMap ? (
+            <Text style={styles.value}>{favoriteMap}</Text>
           ) : (
             <Text style={styles.valueNotSelected}>Not selected</Text>
           )}

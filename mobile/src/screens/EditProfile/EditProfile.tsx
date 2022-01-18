@@ -207,137 +207,147 @@ const EditProfile = ({navigation, data}: IEditProfileProps) => {
 
   return (
     <ScrollView style={styles.screen}>
-      <Text>Edit Profile</Text>
-      <View style={styles.inputGroup}>
-        <Text>Riot ID</Text>
-        <TextInput
-          value={riotID}
-          autoCapitalize="none"
-          onChangeText={text => setRiotID(text)}
-          style={styles.input}
-          placeholder="SEN Tenz"
-        />
-      </View>
-      <View style={styles.inputGroup}>
-        <Text>Tagline #</Text>
-        <TextInput
-          value={tagline}
-          autoCapitalize="none"
-          onChangeText={text => setTagline(text)}
-          style={styles.input}
-          placeholder="TENZ"
-        />
-      </View>
-      <View style={styles.inputGroup}>
-        <Text>Rank</Text>
-        <DropDownPicker
-          theme="DARK"
-          open={rankOpen}
-          value={rank}
-          items={ranks}
-          setOpen={setRankOpen}
-          // @ts-ignore
-          setValue={setRank}
-          setItems={setRanks}
-          onOpen={onRankOpen}
-          zIndex={5000}
-          zIndexInverse={1000}
-        />
-      </View>
-      <View style={styles.inputGroup}>
-        <Text>Favorite Map</Text>
-        <DropDownPicker
-          theme="DARK"
-          open={favoriteMapOpen}
-          value={favoriteMap}
-          items={maps}
-          setOpen={setFavoriteMapOpen}
-          // @ts-ignore
-          setValue={setFavoriteMap}
-          setItems={setMaps}
-          onOpen={onFavoriteMapOpen}
-          zIndex={4000}
-          zIndexInverse={2000}
-        />
-      </View>
-      <View style={styles.inputGroup}>
-        <Text>Looking to play</Text>
-        <DropDownPicker
-          theme="DARK"
-          open={lookingToPlayOpen}
-          value={lookingToPlay}
-          items={gameModes}
-          setOpen={setLookingToPlayOpen}
-          // @ts-ignore
-          setValue={setLookingToPlay}
-          setItems={setGameModes}
-          onOpen={onLookingToPlayOpen}
-          zIndex={3000}
-          zIndexInverse={3000}
-        />
-      </View>
-      <View style={styles.inputGroup}>
-        <Text>Server</Text>
-        <DropDownPicker
-          theme="DARK"
-          open={serverOpen}
-          value={server}
-          items={servers}
-          setOpen={setServerOpen}
-          // @ts-ignore
-          setValue={setServer}
-          setItems={setServers}
-          onOpen={onServerOpen}
-          zIndex={2000}
-          zIndexInverse={4000}
-        />
-      </View>
-      <View style={styles.inputGroup}>
-        <Text>Agents</Text>
-        <DropDownPicker
-          multiple={true}
-          theme="DARK"
-          open={agentsOpen}
-          value={agents}
-          items={gameAgents}
-          setOpen={setAgentsOpen}
-          // @ts-ignore
-          setValue={setAgents}
-          setItems={setGameAgents}
-          onOpen={onAgentsOpen}
-          zIndex={1000}
-          zIndexInverse={5000}
-        />
-      </View>
-      <Text>Your clips</Text>
-      {clips.map((clip, i) => (
-        <View key={i} style={styles.videoRow}>
-          <View style={styles.videoWrapper}>
-            <VideoPlayer
-              video={{
-                uri: clip,
-              }}
-              videoWidth={1600}
-              videoHeight={900}
-              thumbnail={{uri: 'https://i.picsum.photos/id/866/1600/900.jpg'}}
-            />
-          </View>
-          <Pressable onPress={() => deleteClip(0)}>
-            <MaterialIcons name="delete" size={28} color={theme.colors.white} />
-          </Pressable>
+      <View style={styles.container}>
+        <Text style={styles.title}>Edit Profile</Text>
+        <View style={styles.inputGroup}>
+          <Text style={styles.inputLabel}>Riot ID</Text>
+          <TextInput
+            value={riotID}
+            autoCapitalize="none"
+            onChangeText={text => setRiotID(text)}
+            style={styles.input}
+            placeholder="SEN Tenz"
+          />
         </View>
-      ))}
-      {clips.length < 3 && (
-        <Pressable onPress={selectVideo}>
-          <View style={styles.addVideoCard}>
-            {uploadingVideo ? (
-              <ActivityIndicator />
-            ) : (
-              <Text style={styles.addVideoText}>Add Clip</Text>
-            )}
-          </View>
-        </Pressable>
-      )}
+        <View style={styles.inputGroup}>
+          <Text style={styles.inputLabel}>Tagline #</Text>
+          <TextInput
+            value={tagline}
+            autoCapitalize="none"
+            onChangeText={text => setTagline(text)}
+            style={styles.input}
+            placeholder="TENZ"
+          />
+        </View>
+        <View style={styles.inputGroup}>
+          <Text style={styles.inputLabel}>Rank</Text>
+          <DropDownPicker
+            theme="DARK"
+            open={rankOpen}
+            value={rank}
+            items={ranks}
+            setOpen={setRankOpen}
+            // @ts-ignore
+            setValue={setRank}
+            setItems={setRanks}
+            onOpen={onRankOpen}
+            zIndex={5000}
+            zIndexInverse={1000}
+          />
+        </View>
+        <View style={styles.inputGroup}>
+          <Text style={styles.inputLabel}>Favorite Map</Text>
+          <DropDownPicker
+            theme="DARK"
+            open={favoriteMapOpen}
+            value={favoriteMap}
+            items={maps}
+            setOpen={setFavoriteMapOpen}
+            // @ts-ignore
+            setValue={setFavoriteMap}
+            setItems={setMaps}
+            onOpen={onFavoriteMapOpen}
+            zIndex={4000}
+            zIndexInverse={2000}
+          />
+        </View>
+        <View style={styles.inputGroup}>
+          <Text style={styles.inputLabel}>Looking to play</Text>
+          <DropDownPicker
+            theme="DARK"
+            open={lookingToPlayOpen}
+            value={lookingToPlay}
+            items={gameModes}
+            setOpen={setLookingToPlayOpen}
+            // @ts-ignore
+            setValue={setLookingToPlay}
+            setItems={setGameModes}
+            onOpen={onLookingToPlayOpen}
+            zIndex={3000}
+            zIndexInverse={3000}
+          />
+        </View>
+        <View style={styles.inputGroup}>
+          <Text style={styles.inputLabel}>Server</Text>
+          <DropDownPicker
+            theme="DARK"
+            open={serverOpen}
+            value={server}
+            items={servers}
+            setOpen={setServerOpen}
+            // @ts-ignore
+            setValue={setServer}
+            setItems={setServers}
+            onOpen={onServerOpen}
+            zIndex={2000}
+            zIndexInverse={4000}
+          />
+        </View>
+        <View style={styles.inputGroup}>
+          <Text style={styles.inputLabel}>Agents</Text>
+          <DropDownPicker
+            multiple={true}
+            theme="DARK"
+            open={agentsOpen}
+            value={agents}
+            items={gameAgents}
+            setOpen={setAgentsOpen}
+            // @ts-ignore
+            setValue={setAgents}
+            setItems={setGameAgents}
+            onOpen={onAgentsOpen}
+            zIndex={1000}
+            zIndexInverse={5000}
+          />
+        </View>
+        <View style={styles.clipsContainer}>
+          <Text style={styles.inputLabel}>Your clips</Text>
+          {clips.map((clip, i) => (
+            <View key={i} style={styles.videoRow}>
+              <View style={styles.videoWrapper}>
+                <VideoPlayer
+                  video={{
+                    uri: clip,
+                  }}
+                  videoWidth={1600}
+                  videoHeight={900}
+                  thumbnail={{
+                    uri: 'https://i.picsum.photos/id/866/1600/900.jpg',
+                  }}
+                />
+              </View>
+              <Pressable onPress={() => deleteClip(0)}>
+                <MaterialIcons
+                  name="delete"
+                  size={28}
+                  color={theme.colors.white}
+                />
+              </Pressable>
+            </View>
+          ))}
+          {clips.length < 3 && (
+            <Pressable onPress={selectVideo}>
+              <View style={styles.addVideoCard}>
+                {uploadingVideo ? (
+                  <ActivityIndicator />
+                ) : (
+                  <Text style={styles.addVideoText}>Add Clip</Text>
+                )}
+              </View>
+            </Pressable>
+          )}
+        </View>
+      </View>
     </ScrollView>
   );
 };

@@ -10,14 +10,21 @@ export default StyleSheet.create({
     paddingTop: 12,
     paddingHorizontal: 12,
   },
-  titleWrapper: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+  title: {
+    color: theme.colors.white,
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginHorizontal: 12,
+    marginVertical: 7,
   },
   inputGroup: {
-    marginVertical: 10,
+    marginHorizontal: 12,
+    marginVertical: 7,
+  },
+  inputLabel: {
+    color: theme.colors.primary,
+    fontSize: 16,
+    fontWeight: '600',
   },
   input: {
     height: 40,
@@ -26,12 +33,17 @@ export default StyleSheet.create({
     borderRadius: 8,
     borderWidth: 1,
     borderColor: theme.colors.white,
+    marginTop: 7,
+  },
+  clipsContainer: {
+    marginHorizontal: 12,
+    marginVertical: 7,
   },
   videoWrapper: {
-    width: '75%',
+    width: '80%',
   },
   videoRow: {
-    margin: 20,
+    marginVertical: 10,
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
