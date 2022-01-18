@@ -24,9 +24,18 @@ const ViewProfile = ({navigation, data}: IViewProfileProps) => {
   return (
     <ScrollView style={styles.screen}>
       <View style={styles.container}>
+        {!discoverable && (
+          <View style={styles.discoverableWarning}>
+            <MaterialIcons name="warning" size={26} />
+            <Text style={styles.warningText}>
+              You are not currenlty discoverable. Complete your profile to start
+              showing up for other users.
+            </Text>
+          </View>
+        )}
         <View style={styles.titleWrapper}>
           <Text style={styles.IGN}>
-            {riotID} #{tagline}
+            {riotID ? `${riotID} #${tagline}` : 'Your Profile'}
           </Text>
           <Pressable onPress={() => navigation.navigate('EditProfile')}>
             <MaterialIcons name="edit" size={24} color={theme.colors.white} />
@@ -44,13 +53,38 @@ const ViewProfile = ({navigation, data}: IViewProfileProps) => {
             />
           </View>
         )}
-        <Text style={styles.heading}>Agents</Text>
-        <View style={styles.agentsWrapper}>
-          {agents.map((agent: string, i: number) => (
-            <Text style={styles.agent} key={i}>
-              {agent}
-            </Text>
-          ))}
+        <View style={styles.profileField}>
+          <Text style={styles.heading}>Favorite Map</Text>
+          {favoriteMap ? (
+            <Text style={styles.value}>favoriteMap</Text>
+          ) : (
+            <Text style={styles.valueNotSelected}>Not selected</Text>
+          )}
+        </View>
+        <View style={styles.profileField}>
+          <Text style={styles.heading}>Looking to play</Text>
+          {lookingToPlay ? (
+            <Text style={styles.value}>lookingToPlay</Text>
+          ) : (
+            <Text style={styles.valueNotSelected}>Not selected</Text>
+          )}
+        </View>
+        <View style={styles.profileField}>
+          <Text style={styles.heading}>Rank</Text>
+
+          {rank ? (
+            <Text style={styles.value}>RANKS[rank]</Text>
+          ) : (
+            <Text style={styles.valueNotSelected}>Not selected</Text>
+          )}
+        </View>
+        <View style={styles.profileField}>
+          <Text style={styles.heading}>Server</Text>
+          {server ? (
+            <Text style={styles.value}>server</Text>
+          ) : (
+            <Text style={styles.valueNotSelected}>Not selected</Text>
+          )}
         </View>
         {clips[1] && (
           <View style={styles.videoWrapper}>
@@ -64,14 +98,20 @@ const ViewProfile = ({navigation, data}: IViewProfileProps) => {
             />
           </View>
         )}
-        <Text style={styles.heading}>Favorite Map</Text>
-        <Text>{favoriteMap}</Text>
-        <Text style={styles.heading}>Looking to play</Text>
-        <Text>{lookingToPlay}</Text>
-        <Text style={styles.heading}>Rank</Text>
-        <Text>{RANKS[rank]}</Text>
-        <Text style={styles.heading}>Server</Text>
-        <Text>{server}</Text>
+        <View style={styles.agentsField}>
+          <Text style={styles.heading}>Agents</Text>
+          <View style={styles.agentsWrapper}>
+            {agents.length ? (
+              agents.map((agent: string, i: number) => (
+                <Text style={styles.agent} key={i}>
+                  {agent}
+                </Text>
+              ))
+            ) : (
+              <Text style={styles.agentsNotSelected}>No agents selected.</Text>
+            )}
+          </View>
+        </View>
         {clips[2] && (
           <View style={styles.videoWrapper}>
             <VideoPlayer
