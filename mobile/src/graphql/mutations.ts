@@ -16,7 +16,7 @@ export const EDIT_PROFILE_MUTATION = gql`
   mutation editProfile(
     $riotID: String
     $tagline: String
-    $clips: [String!]
+    $clip: String
     $agents: [String!]
     $favoriteMap: String
     $lookingToPlay: String
@@ -27,7 +27,7 @@ export const EDIT_PROFILE_MUTATION = gql`
       input: {
         riotID: $riotID
         tagline: $tagline
-        clips: $clips
+        clip: $clip
         agents: $agents
         favoriteMap: $favoriteMap
         lookingToPlay: $lookingToPlay
@@ -40,7 +40,7 @@ export const EDIT_PROFILE_MUTATION = gql`
       user
       riotID
       tagline
-      clips
+      clip
       agents
       favoriteMap
       lookingToPlay

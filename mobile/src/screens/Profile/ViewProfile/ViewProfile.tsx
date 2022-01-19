@@ -12,7 +12,7 @@ const ViewProfile = ({navigation, data}: IViewProfileProps) => {
   let {
     riotID,
     tagline,
-    clips,
+    clip,
     discoverable,
     agents,
     favoriteMap,
@@ -20,6 +20,8 @@ const ViewProfile = ({navigation, data}: IViewProfileProps) => {
     rank,
     server,
   } = data;
+
+  const showClip = clip.length > 0;
 
   return (
     <ScrollView style={styles.screen}>
@@ -41,18 +43,22 @@ const ViewProfile = ({navigation, data}: IViewProfileProps) => {
             <MaterialIcons name="edit" size={24} color={theme.colors.white} />
           </Pressable>
         </View>
-        {clips[0] && (
+        {showClip ? (
           <View style={styles.videoWrapper}>
             <VideoPlayer
               autoplay
               video={{
-                uri: clips[0],
+                uri: clip,
               }}
               videoWidth={1600}
               videoHeight={900}
               thumbnail={require('../../../assets/img/valcon-thumbnail.png')}
               endThumbnail={require('../../../assets/img/valcon-thumbnail.png')}
             />
+          </View>
+        ) : (
+          <View style={styles.noVideoCard}>
+            <Text style={styles.noVideoText}>No Clip Uploaded</Text>
           </View>
         )}
         <View style={styles.profileField}>
@@ -87,19 +93,6 @@ const ViewProfile = ({navigation, data}: IViewProfileProps) => {
             <Text style={styles.valueNotSelected}>Not selected</Text>
           )}
         </View>
-        {clips[1] && (
-          <View style={styles.videoWrapper}>
-            <VideoPlayer
-              video={{
-                uri: clips[1],
-              }}
-              videoWidth={1600}
-              videoHeight={900}
-              thumbnail={require('../../../assets/img/valcon-thumbnail.png')}
-              endThumbnail={require('../../../assets/img/valcon-thumbnail.png')}
-            />
-          </View>
-        )}
         <View style={styles.agentsField}>
           <Text style={styles.heading}>Agents</Text>
           <View style={styles.agentsWrapper}>
@@ -114,19 +107,6 @@ const ViewProfile = ({navigation, data}: IViewProfileProps) => {
             )}
           </View>
         </View>
-        {clips[2] && (
-          <View style={styles.videoWrapper}>
-            <VideoPlayer
-              video={{
-                uri: clips[2],
-              }}
-              videoWidth={1600}
-              videoHeight={900}
-              thumbnail={require('../../../assets/img/valcon-thumbnail.png')}
-              endThumbnail={require('../../../assets/img/valcon-thumbnail.png')}
-            />
-          </View>
-        )}
       </View>
     </ScrollView>
   );

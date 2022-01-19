@@ -4,7 +4,7 @@ export default interface Profile {
   user: string | null;
   riotID: string | null;
   tagline: string | null;
-  clips: string[] | null;
+  clip: string | null;
   agents: string[] | null;
   favoriteMap: string | null;
   lookingToPlay: string | null;

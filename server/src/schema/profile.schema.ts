@@ -1,5 +1,5 @@
 import { getModelForClass, prop, Ref } from '@typegoose/typegoose';
-import { Max, MaxLength, Min } from 'class-validator';
+import { Max, Min } from 'class-validator';
 import { Field, InputType, Int, ObjectType } from 'type-graphql';
 import { User } from './user.schema';
 
@@ -24,9 +24,9 @@ export class Profile {
   @prop()
   tagline?: string;
 
-  @Field(() => [String], { nullable: true })
-  @prop({ type: () => [String] })
-  clips?: string[];
+  @Field(() => String, { nullable: true })
+  @prop({ type: () => String })
+  clip?: string;
 
   @Field(() => [String], { nullable: true })
   @prop({ type: () => [String] })
@@ -59,8 +59,8 @@ export class EditProfileInput {
   @Field(() => String, { nullable: true })
   tagline?: string;
 
-  @Field(() => [String], { nullable: true })
-  clips?: string[];
+  @Field(() => String, { nullable: true })
+  clip: string;
 
   @Field(() => [String], { nullable: true })
   agents?: string[];

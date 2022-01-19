@@ -10,7 +10,7 @@ class ProfileService {
     const {
       riotID,
       tagline,
-      clips,
+      clip,
       agents,
       favoriteMap,
       lookingToPlay,
@@ -25,7 +25,7 @@ class ProfileService {
 
       if (riotID) profile.riotID = riotID;
       if (tagline) profile.tagline = tagline;
-      if (clips) profile.clips = clips;
+      if (clip !== null) profile.clip = clip;
       if (agents) profile.agents = agents;
       if (favoriteMap) profile.favoriteMap = favoriteMap;
       if (lookingToPlay) profile.lookingToPlay = lookingToPlay;
@@ -35,8 +35,7 @@ class ProfileService {
       if (
         profile.riotID &&
         profile.tagline &&
-        profile.clips &&
-        profile.clips.length > 0 &&
+        profile.clip !== '' &&
         profile.agents &&
         profile.agents.length > 0 &&
         profile.favoriteMap &&
@@ -45,6 +44,7 @@ class ProfileService {
         profile.server
       )
         profile.discoverable = true;
+      else profile.discoverable = false;
 
       await profile.save();
 

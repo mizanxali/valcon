@@ -7,8 +7,3 @@ export type ProfileStackParamList = {
   ViewProfile: undefined;
   EditProfile: undefined;
 };
-
-export type SwipeStackParamList = {
-  SwipeProfiles: undefined;
-  FullProfile: {profile: any};
-};

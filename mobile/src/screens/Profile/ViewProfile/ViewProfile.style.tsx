@@ -99,4 +99,18 @@ export default StyleSheet.create({
     marginHorizontal: 12,
     marginVertical: 7,
   },
+  noVideoCard: {
+    margin: 20,
+    height: 50,
+    backgroundColor: theme.colors.grey,
+    borderRadius: 10,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  noVideoText: {
+    color: theme.colors.white,
+    fontSize: 15,
+    fontWeight: 'bold',
+  },
 });

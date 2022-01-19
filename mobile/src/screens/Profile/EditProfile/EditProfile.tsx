@@ -30,7 +30,7 @@ const EditProfile = ({navigation, data}: IEditProfileProps) => {
   let {
     riotID: riotIDInitial,
     tagline: taglineInitial,
-    clips: clipsInitial,
+    clip: clipInitial,
     agents: agentsInitial,
     favoriteMap: favoriteMapInitial,
     lookingToPlay: lookingToPlayInitial,
@@ -42,7 +42,7 @@ const EditProfile = ({navigation, data}: IEditProfileProps) => {
 
   const [riotID, setRiotID] = useState(riotIDInitial ? riotIDInitial : '');
   const [tagline, setTagline] = useState(taglineInitial ? taglineInitial : '');
-  const [clips, setClips] = useState(clipsInitial ? clipsInitial : []);
+  const [clip, setClip] = useState(clipInitial ? clipInitial : '');
 
   const [agents, setAgents] = useState(agentsInitial ? agentsInitial : []);
   const [favoriteMap, setFavoriteMap] = useState(
@@ -127,13 +127,12 @@ const EditProfile = ({navigation, data}: IEditProfileProps) => {
     setServerOpen(false);
   }, []);
 
-  function deleteClip(removeIndex: number) {
-    const newClips = clips.filter((clip, i) => i != removeIndex);
-    setClips(newClips);
+  function deleteClip() {
+    setClip('');
   }
 
   function addClip(clipUrl: string) {
-    setClips([...clips, clipUrl]);
+    setClip(clipUrl);
   }
 
   const [uploadingVideo, setUploadingVideo] = useState(false);
@@ -162,7 +161,6 @@ const EditProfile = ({navigation, data}: IEditProfileProps) => {
           );
 
           const text = await res.text();
-
           const data = JSON.parse(text);
           addClip(data.secure_url);
           setUploadingVideo(false);
@@ -178,7 +176,7 @@ const EditProfile = ({navigation, data}: IEditProfileProps) => {
     variables: {
       riotID,
       tagline,
-      clips,
+      clip,
       agents,
       favoriteMap,
       lookingToPlay,
@@ -312,8 +310,8 @@ const EditProfile = ({navigation, data}: IEditProfileProps) => {
         </View>
         <View style={styles.clipsContainer}>
           <Text style={styles.inputLabel}>Your clips</Text>
-          {clips.map((clip, i) => (
-            <View key={i} style={styles.videoRow}>
+          {clip ? (
+            <View style={styles.videoRow}>
               <View style={styles.videoWrapper}>
                 <VideoPlayer
                   autoplay
@@ -326,7 +324,7 @@ const EditProfile = ({navigation, data}: IEditProfileProps) => {
                   endThumbnail={require('../../../assets/img/valcon-thumbnail.png')}
                 />
               </View>
-              <Pressable onPress={() => deleteClip(0)}>
+              <Pressable onPress={deleteClip}>
                 <MaterialIcons
                   name="delete"
                   size={28}
@@ -334,8 +332,7 @@ const EditProfile = ({navigation, data}: IEditProfileProps) => {
                 />
               </Pressable>
             </View>
-          ))}
-          {clips.length < 3 && (
+          ) : (
             <Pressable onPress={selectVideo}>
               <View style={styles.addVideoCard}>
                 {uploadingVideo ? (

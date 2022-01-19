@@ -33,6 +33,7 @@ class UserService {
       const newProfile = new ProfileModel({
         user: userDoc._id,
         discoverable: false,
+        clip: '',
       });
 
       await newProfile.save();

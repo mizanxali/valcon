@@ -8,7 +8,7 @@ export const GET_PROFILE_QUERY = gql`
       user
       riotID
       tagline
-      clips
+      clip
       agents
       favoriteMap
       lookingToPlay
@@ -27,7 +27,7 @@ export const GET_PROFILES_QUERY = gql`
       user
       riotID
       tagline
-      clips
+      clip
       agents
       favoriteMap
       lookingToPlay
