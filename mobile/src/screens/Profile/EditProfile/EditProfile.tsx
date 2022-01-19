@@ -16,14 +16,14 @@ import {launchImageLibrary} from 'react-native-image-picker';
 import uuid from 'react-native-uuid';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import VideoPlayer from 'react-native-video-player';
-import {AGENTS} from '../../constants/agents';
-import {MAPS} from '../../constants/maps';
-import {RANKS} from '../../constants/ranks';
-import {SERVERS} from '../../constants/servers';
-import {EDIT_PROFILE_MUTATION} from '../../graphql/mutations';
-import theme from '../../theme';
-import {ProfileStackParamList} from '../../types';
-import Profile from '../../types/Profile';
+import {AGENTS} from '../../../constants/agents';
+import {MAPS} from '../../../constants/maps';
+import {RANKS} from '../../../constants/ranks';
+import {SERVERS} from '../../../constants/servers';
+import {EDIT_PROFILE_MUTATION} from '../../../graphql/mutations';
+import theme from '../../../theme';
+import {ProfileStackParamList} from '../../../types';
+import Profile from '../../../types/Profile';
 import styles from './EditProfile.style';
 
 const EditProfile = ({navigation, data}: IEditProfileProps) => {
@@ -316,14 +316,14 @@ const EditProfile = ({navigation, data}: IEditProfileProps) => {
             <View key={i} style={styles.videoRow}>
               <View style={styles.videoWrapper}>
                 <VideoPlayer
+                  autoplay
                   video={{
                     uri: clip,
                   }}
                   videoWidth={1600}
                   videoHeight={900}
-                  thumbnail={{
-                    uri: 'https://i.picsum.photos/id/866/1600/900.jpg',
-                  }}
+                  thumbnail={require('../../../assets/img/valcon-thumbnail.png')}
+                  endThumbnail={require('../../../assets/img/valcon-thumbnail.png')}
                 />
               </View>
               <Pressable onPress={() => deleteClip(0)}>

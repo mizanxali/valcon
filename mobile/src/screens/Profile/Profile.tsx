@@ -4,8 +4,8 @@ import React from 'react';
 import {Text, View} from 'react-native';
 import {GET_PROFILE_QUERY} from '../../graphql/queries';
 import {ProfileStackParamList} from '../../types';
-import EditProfile from '../EditProfile/EditProfile';
-import ViewProfile from '../ViewProfile/ViewProfile';
+import EditProfile from './EditProfile/EditProfile';
+import ViewProfile from './ViewProfile/ViewProfile';
 import styles from './Profile.style';
 
 const Stack = createNativeStackNavigator<ProfileStackParamList>();

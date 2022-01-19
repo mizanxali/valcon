@@ -18,6 +18,7 @@ const HomeScreen = ({
   return (
     <View style={styles.screen}>
       <Tab.Navigator
+        initialRouteName="Swipe"
         screenOptions={({route}) => ({
           tabBarIcon: ({focused, color, size}) => {
             let iconName = '';

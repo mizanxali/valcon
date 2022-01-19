@@ -3,9 +3,9 @@ import React from 'react';
 import {Pressable, ScrollView, Text, View} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import VideoPlayer from 'react-native-video-player';
-import theme from '../../theme';
-import {ProfileStackParamList} from '../../types';
-import {RANKS} from '../../constants/ranks';
+import theme from '../../../theme';
+import {ProfileStackParamList} from '../../../types';
+import {RANKS} from '../../../constants/ranks';
 import styles from './ViewProfile.style';
 
 const ViewProfile = ({navigation, data}: IViewProfileProps) => {
@@ -44,12 +44,14 @@ const ViewProfile = ({navigation, data}: IViewProfileProps) => {
         {clips[0] && (
           <View style={styles.videoWrapper}>
             <VideoPlayer
+              autoplay
               video={{
                 uri: clips[0],
               }}
               videoWidth={1600}
               videoHeight={900}
-              thumbnail={{uri: 'https://i.picsum.photos/id/866/1600/900.jpg'}}
+              thumbnail={require('../../../assets/img/valcon-thumbnail.png')}
+              endThumbnail={require('../../../assets/img/valcon-thumbnail.png')}
             />
           </View>
         )}
@@ -93,7 +95,8 @@ const ViewProfile = ({navigation, data}: IViewProfileProps) => {
               }}
               videoWidth={1600}
               videoHeight={900}
-              thumbnail={{uri: 'https://i.picsum.photos/id/866/1600/900.jpg'}}
+              thumbnail={require('../../../assets/img/valcon-thumbnail.png')}
+              endThumbnail={require('../../../assets/img/valcon-thumbnail.png')}
             />
           </View>
         )}
@@ -119,7 +122,8 @@ const ViewProfile = ({navigation, data}: IViewProfileProps) => {
               }}
               videoWidth={1600}
               videoHeight={900}
-              thumbnail={{uri: 'https://i.picsum.photos/id/866/1600/900.jpg'}}
+              thumbnail={require('../../../assets/img/valcon-thumbnail.png')}
+              endThumbnail={require('../../../assets/img/valcon-thumbnail.png')}
             />
           </View>
         )}
