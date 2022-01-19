@@ -9,6 +9,7 @@ import {
   ScrollView,
   Text,
   TextInput,
+  ToastAndroid,
   View,
 } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -135,6 +136,13 @@ const EditProfile = ({navigation, data}: IEditProfileProps) => {
     setClip(clipUrl);
   }
 
+  const showUploadingToast = () => {
+    ToastAndroid.show(
+      'Please wait for the upload to finish!',
+      ToastAndroid.SHORT,
+    );
+  };
+
   const [uploadingVideo, setUploadingVideo] = useState(false);
 
   const selectVideo = async () => {
@@ -189,6 +197,7 @@ const EditProfile = ({navigation, data}: IEditProfileProps) => {
     React.useCallback(() => {
       const onBackPress = () => {
         if (uploadingVideo) {
+          showUploadingToast();
           return true;
         } else {
           editProfile();

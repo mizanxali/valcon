@@ -5,13 +5,26 @@ export default StyleSheet.create({
   screen: {
     backgroundColor: theme.colors.background,
     height: '100%',
+    display: 'flex',
+    alignItems: 'center',
   },
-  CardContainer: {
-    width: '95%',
+  titleWrapper: {
+    display: 'flex',
+    width: '90%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  logo: {
+    width: 80,
+    height: 80,
+  },
+  cardContainer: {
+    width: '90%',
   },
   card: {
     position: 'absolute',
-    backgroundColor: theme.colors.background,
+    backgroundColor: theme.colors.surface,
     width: '100%',
     shadowColor: 'black',
     shadowOpacity: 0.2,

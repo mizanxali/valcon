@@ -5,5 +5,6 @@ export default {
     white: '#fff',
     black: '#000',
     grey: 'grey',
+    surface: '#292d3e',
   },
 };

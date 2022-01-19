@@ -49,3 +49,15 @@ export const EDIT_PROFILE_MUTATION = gql`
     }
   }
 `;
+
+export const LEFT_SWIPE_MUTATION = gql`
+  mutation leftSwipe($leftSwipedID: String!) {
+    leftSwipe(input: {leftSwipedID: $leftSwipedID})
+  }
+`;
+
+export const RIGHT_SWIPE_MUTATION = gql`
+  mutation rightSwipe($rightSwipedID: String!) {
+    rightSwipe(input: {rightSwipedID: $rightSwipedID})
+  }
+`;

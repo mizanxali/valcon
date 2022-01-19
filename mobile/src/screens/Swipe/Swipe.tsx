@@ -1,10 +1,16 @@
-import {useQuery} from '@apollo/client';
-import React from 'react';
-import {Text, View} from 'react-native';
+import {useMutation, useQuery} from '@apollo/client';
+import React, {useState} from 'react';
+import {Image, Pressable, Text, View} from 'react-native';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import VideoPlayer from 'react-native-video-player';
 import TinderCard from 'react-tinder-card';
 import {RANKS} from '../../constants/ranks';
+import {
+  LEFT_SWIPE_MUTATION,
+  RIGHT_SWIPE_MUTATION,
+} from '../../graphql/mutations';
 import {GET_PROFILES_QUERY} from '../../graphql/queries';
+import theme from '../../theme';
 import styles from './Swipe.style';
 
 const SwipeScreen = () => {
@@ -16,6 +22,18 @@ const SwipeScreen = () => {
     },
   });
 
+  const [leftSwipe] = useMutation(LEFT_SWIPE_MUTATION, {
+    onError(err) {
+      console.log(err.graphQLErrors[0]);
+    },
+  });
+
+  const [rightSwipe] = useMutation(RIGHT_SWIPE_MUTATION, {
+    onError(err) {
+      console.log(err.graphQLErrors[0]);
+    },
+  });
+
   if (loading)
     return (
       <View style={styles.screen}>
@@ -24,26 +42,51 @@ const SwipeScreen = () => {
     );
 
   if (data) {
-    const profiles = [
-      ...data.getProfiles,
-      ...data.getProfiles,
-      ...data.getProfiles,
-    ];
+    const profiles = [...data.getProfiles];
 
-    const swiped = (direction: any, nameToDelete: any) => {
-      console.log('removing: ' + nameToDelete);
+    const swipeHandler = (direction: string, swipedId: string) => {
+      if (direction === 'right') {
+        rightSwipe({
+          variables: {
+            rightSwipedID: swipedId,
+          },
+        });
+      } else if (direction === 'left') {
+        leftSwipe({
+          variables: {
+            leftSwipedID: swipedId,
+          },
+        });
+      }
     };
 
-    const outOfFrame = (name: any) => {
-      console.log(name + ' left the screen!');
+    const cardLeftScreenHandler = (swipedId: any) => {
+      //delete card
     };
+
+    if (profiles.length === 0)
+      return (
+        <View style={styles.screen}>
+          <Text>You ran out of potential profiles...</Text>
+          <Text>Try changing your search filters.</Text>
+        </View>
+      );
 
     return (
       <View style={styles.screen}>
-        <Text>Swipe</Text>
-        <View style={styles.CardContainer}>
+        <View style={styles.titleWrapper}>
+          <Image
+            style={styles.logo}
+            source={require('../../assets/img/valcon-logo.png')}
+          />
+          <Pressable onPress={() => console.log('settings')}>
+            <MaterialIcons name="edit" size={30} color={theme.colors.white} />
+          </Pressable>
+        </View>
+        <View style={styles.cardContainer}>
           {profiles.map((profile, i) => {
             const {
+              user,
               riotID,
               clip,
               favoriteMap,
@@ -57,8 +100,8 @@ const SwipeScreen = () => {
               <TinderCard
                 key={i}
                 preventSwipe={['up', 'down']}
-                onSwipe={dir => swiped(dir, profile.riotID)}
-                onCardLeftScreen={() => outOfFrame(profile.riotID)}>
+                onSwipe={dir => swipeHandler(dir, user)}
+                onCardLeftScreen={() => cardLeftScreenHandler(user)}>
                 <View style={styles.card}>
                   <Text style={styles.title}>
                     {riotID ? `${riotID} #???` : 'Your Profile'}
@@ -67,6 +110,7 @@ const SwipeScreen = () => {
                     <VideoPlayer
                       hideControlsOnStart
                       autoplay
+                      loop
                       video={{
                         uri: clip,
                       }}
