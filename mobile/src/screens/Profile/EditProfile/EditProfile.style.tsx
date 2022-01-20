@@ -13,7 +13,7 @@ export default StyleSheet.create({
   title: {
     color: theme.colors.white,
     fontSize: 24,
-    fontWeight: 'bold',
+    fontFamily: 'FiraSans-Bold',
     marginHorizontal: 12,
     marginVertical: 7,
   },
@@ -24,7 +24,7 @@ export default StyleSheet.create({
   inputLabel: {
     color: theme.colors.primary,
     fontSize: 16,
-    fontWeight: '600',
+    fontFamily: 'FiraSans-Medium',
   },
   input: {
     height: 40,
@@ -34,6 +34,7 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderColor: theme.colors.white,
     marginTop: 7,
+    fontFamily: 'FiraSans-Medium',
   },
   clipsContainer: {
     marginHorizontal: 12,
@@ -61,6 +62,6 @@ export default StyleSheet.create({
   addVideoText: {
     color: theme.colors.white,
     fontSize: 15,
-    fontWeight: 'bold',
+    fontFamily: 'FiraSans-Medium',
   },
 });

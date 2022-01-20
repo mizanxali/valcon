@@ -77,10 +77,14 @@ const SwipeScreen = () => {
         <View style={styles.titleWrapper}>
           <Image
             style={styles.logo}
-            source={require('../../assets/img/valcon-logo.png')}
+            source={require('../../../assets/img/valcon-logo.png')}
           />
           <Pressable onPress={() => console.log('settings')}>
-            <MaterialIcons name="edit" size={30} color={theme.colors.white} />
+            <MaterialIcons
+              name="settings"
+              size={30}
+              color={theme.colors.white}
+            />
           </Pressable>
         </View>
         <View style={styles.cardContainer}>
@@ -103,9 +107,7 @@ const SwipeScreen = () => {
                 onSwipe={dir => swipeHandler(dir, user)}
                 onCardLeftScreen={() => cardLeftScreenHandler(user)}>
                 <View style={styles.card}>
-                  <Text style={styles.title}>
-                    {riotID ? `${riotID} #???` : 'Your Profile'}
-                  </Text>
+                  <Text style={styles.title}>{riotID}</Text>
                   <View style={styles.videoWrapper}>
                     <VideoPlayer
                       hideControlsOnStart
@@ -116,8 +118,6 @@ const SwipeScreen = () => {
                       }}
                       videoWidth={1600}
                       videoHeight={900}
-                      thumbnail={require('../../assets/img/valcon-thumbnail.png')}
-                      endThumbnail={require('../../assets/img/valcon-thumbnail.png')}
                     />
                   </View>
                   <View style={styles.profileField}>

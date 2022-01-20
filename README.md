@@ -1,2 +1,3 @@
 # VALCON
-<img src="mobile/src/assets/img/valcon-thumbnail.png" />
+
+<img src="mobile/assets/img/valcon-thumbnail.png" />

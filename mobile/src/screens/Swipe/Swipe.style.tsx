@@ -40,9 +40,10 @@ export default StyleSheet.create({
   title: {
     color: theme.colors.white,
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: '500',
     marginHorizontal: 12,
     marginVertical: 7,
+    fontFamily: 'FiraSans-Bold',
   },
   profileField: {
     display: 'flex',
@@ -55,14 +56,14 @@ export default StyleSheet.create({
   heading: {
     color: theme.colors.primary,
     fontSize: 16,
-    fontWeight: '600',
+    fontFamily: 'FiraSans-Medium',
   },
   value: {
     marginHorizontal: 12,
     marginVertical: 7,
     color: theme.colors.white,
     fontSize: 16,
-    fontWeight: '600',
+    fontFamily: 'FiraSans-Medium',
   },
   videoWrapper: {
     marginHorizontal: 12,
@@ -85,11 +86,12 @@ export default StyleSheet.create({
   agent: {
     backgroundColor: theme.colors.grey,
     fontSize: 14,
+    fontFamily: 'FiraSans-Medium',
     color: theme.colors.white,
     paddingHorizontal: 18,
     paddingVertical: 3,
     marginHorizontal: 3,
     borderRadius: 10,
-    marginVertical: 4,
+    marginVertical: 3,
   },
 });

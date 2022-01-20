@@ -25,6 +25,7 @@ export default StyleSheet.create({
     width: '85%',
     color: theme.colors.white,
     fontSize: 12,
+    fontFamily: 'FiraSans-Regular',
   },
   titleWrapper: {
     display: 'flex',
@@ -35,7 +36,7 @@ export default StyleSheet.create({
   IGN: {
     color: theme.colors.white,
     fontSize: 24,
-    fontWeight: 'bold',
+    fontFamily: 'FiraSans-Bold',
     marginHorizontal: 12,
     marginVertical: 7,
   },
@@ -54,21 +55,21 @@ export default StyleSheet.create({
   heading: {
     color: theme.colors.primary,
     fontSize: 16,
-    fontWeight: '600',
+    fontFamily: 'FiraSans-Medium',
   },
   value: {
     marginHorizontal: 12,
     marginVertical: 7,
     color: theme.colors.white,
     fontSize: 16,
-    fontWeight: '600',
+    fontFamily: 'FiraSans-Medium',
   },
   valueNotSelected: {
     marginHorizontal: 12,
     marginVertical: 7,
     color: theme.colors.grey,
     fontSize: 16,
-    fontWeight: '500',
+    fontFamily: 'FiraSans-Regular',
   },
   agentsWrapper: {
     borderRadius: 10,
@@ -83,6 +84,7 @@ export default StyleSheet.create({
   agent: {
     backgroundColor: theme.colors.grey,
     fontSize: 14,
+    fontFamily: 'FiraSans-Medium',
     color: theme.colors.white,
     paddingHorizontal: 18,
     paddingVertical: 3,
@@ -93,7 +95,7 @@ export default StyleSheet.create({
   agentsNotSelected: {
     color: theme.colors.grey,
     fontSize: 16,
-    fontWeight: '500',
+    fontFamily: 'FiraSans-Regular',
   },
   videoWrapper: {
     marginHorizontal: 12,
@@ -111,6 +113,6 @@ export default StyleSheet.create({
   noVideoText: {
     color: theme.colors.white,
     fontSize: 15,
-    fontWeight: 'bold',
+    fontFamily: 'FiraSans-Regular',
   },
 });

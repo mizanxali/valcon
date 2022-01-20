@@ -329,8 +329,8 @@ const EditProfile = ({navigation, data}: IEditProfileProps) => {
                   }}
                   videoWidth={1600}
                   videoHeight={900}
-                  thumbnail={require('../../../assets/img/valcon-thumbnail.png')}
-                  endThumbnail={require('../../../assets/img/valcon-thumbnail.png')}
+                  thumbnail={require('../../../../assets/img/valcon-thumbnail.png')}
+                  endThumbnail={require('../../../../assets/img/valcon-thumbnail.png')}
                 />
               </View>
               <Pressable onPress={deleteClip}>
