@@ -63,3 +63,18 @@ export class LeftSwipeInput {
   @Field(() => String)
   leftSwipedID: string;
 }
+
+@ObjectType()
+export class Match {
+  @Field(() => String)
+  @prop()
+  _id: string;
+
+  @Field(() => String, { nullable: true })
+  @prop()
+  riotID?: string;
+
+  @Field(() => String, { nullable: true })
+  @prop()
+  tagline?: string;
+}

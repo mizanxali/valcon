@@ -1,6 +1,6 @@
 import {useMutation, useQuery} from '@apollo/client';
 import React, {useState} from 'react';
-import {Image, Pressable, Text, View} from 'react-native';
+import {ActivityIndicator, Image, Pressable, Text, View} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import VideoPlayer from 'react-native-video-player';
 import TinderCard from 'react-tinder-card';
@@ -37,7 +37,7 @@ const SwipeScreen = () => {
   if (loading)
     return (
       <View style={styles.screen}>
-        <Text>Loading swipes...</Text>
+        <ActivityIndicator />
       </View>
     );
 
@@ -155,7 +155,11 @@ const SwipeScreen = () => {
     );
   }
 
-  return null;
+  return (
+    <View style={styles.screen}>
+      <Text>Something went wrong.</Text>
+    </View>
+  );
 };
 
 export default SwipeScreen;

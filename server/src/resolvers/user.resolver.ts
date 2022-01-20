@@ -3,6 +3,7 @@ import {
   CreateUserInput,
   LeftSwipeInput,
   LoginInput,
+  Match,
   RightSwipeInput,
   User,
 } from '../schema/user.schema';
@@ -42,5 +43,12 @@ export default class UserResolver {
   @Query(() => User)
   me(@Ctx() context: Context) {
     return context.user;
+  }
+
+  @Authorized()
+  @Query(() => [Match])
+  getMatches(@Ctx() context: Context) {
+    const user = context.user!;
+    return this.userService.getMatches(user);
   }
 }

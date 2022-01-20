@@ -1,7 +1,7 @@
 import {useQuery} from '@apollo/client';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
-import {Text, View} from 'react-native';
+import {ActivityIndicator, Text, View} from 'react-native';
 import {GET_PROFILE_QUERY} from '../../graphql/queries';
 import {ProfileStackParamList} from '../../types';
 import EditProfile from './EditProfile/EditProfile';
@@ -16,19 +16,26 @@ const ProfileScreen = () => {
   if (loading)
     return (
       <View style={styles.screen}>
-        <Text>Loading profile...</Text>
+        <ActivityIndicator />
       </View>
     );
 
+  if (data)
+    return (
+      <Stack.Navigator>
+        <Stack.Screen name="ViewProfile" options={{headerShown: false}}>
+          {props => <ViewProfile {...props} data={data.getProfile} />}
+        </Stack.Screen>
+        <Stack.Screen name="EditProfile" options={{headerShown: false}}>
+          {props => <EditProfile {...props} data={data.getProfile} />}
+        </Stack.Screen>
+      </Stack.Navigator>
+    );
+
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="ViewProfile" options={{headerShown: false}}>
-        {props => <ViewProfile {...props} data={data.getProfile} />}
-      </Stack.Screen>
-      <Stack.Screen name="EditProfile" options={{headerShown: false}}>
-        {props => <EditProfile {...props} data={data.getProfile} />}
-      </Stack.Screen>
-    </Stack.Navigator>
+    <View style={styles.screen}>
+      <Text>Something went wrong.</Text>
+    </View>
   );
 };
 

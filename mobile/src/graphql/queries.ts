@@ -36,3 +36,13 @@ export const GET_PROFILES_QUERY = gql`
     }
   }
 `;
+
+export const GET_MATCHES_QUERY = gql`
+  {
+    getMatches {
+      _id
+      riotID
+      tagline
+    }
+  }
+`;

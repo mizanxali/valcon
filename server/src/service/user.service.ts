@@ -149,6 +149,31 @@ class UserService {
       throw new ApolloError('Server error');
     }
   }
+
+  async getMatches(user: User) {
+    try {
+      const currentUser = await UserModel.findById(user._id);
+      if (!currentUser) throw new ApolloError('User not found');
+
+      let matches = [];
+
+      for await (const item of currentUser.matches) {
+        const profile = await ProfileModel.findOne({ user: item });
+        if (!profile) throw new ApolloError('Profile not found');
+
+        matches.push({
+          _id: profile.user,
+          riotID: profile.riotID,
+          tagline: profile.tagline,
+        });
+      }
+
+      return matches;
+    } catch (err) {
+      console.log(err);
+      throw new ApolloError('Server error');
+    }
+  }
 }
 
 export default UserService;
