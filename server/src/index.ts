@@ -13,6 +13,8 @@ import { connectDB } from './utils/db';
 import { verifyJwt } from './utils/jwt';
 import authChecker from './utils/authChecker';
 
+const PORT = process.env.port || 4000;
+
 const main = async () => {
   const schema = await buildSchema({
     resolvers,
@@ -41,7 +43,7 @@ const main = async () => {
 
   server.applyMiddleware({ app });
 
-  await new Promise<void>((resolve) => app.listen({ port: 4000 }, resolve));
+  await new Promise<void>((resolve) => app.listen({ port: PORT }, resolve));
   console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`);
 
   connectDB();
