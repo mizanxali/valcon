@@ -79,19 +79,3 @@ export class EditProfileInput {
   @Field(() => String, { nullable: true })
   server?: string;
 }
-
-@InputType()
-export class GetProfilesInput {
-  @Min(0)
-  @Max(21)
-  @Field(() => Int)
-  minRank: number;
-
-  @Min(0)
-  @Max(21)
-  @Field(() => Int)
-  maxRank: number;
-
-  @Field(() => [String])
-  servers: string[];
-}

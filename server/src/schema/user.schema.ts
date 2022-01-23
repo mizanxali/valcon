@@ -1,6 +1,6 @@
 import { getModelForClass, prop, Ref } from '@typegoose/typegoose';
-import { IsEmail, MinLength } from 'class-validator';
-import { Field, InputType, ObjectType } from 'type-graphql';
+import { IsEmail, Max, Min, MinLength } from 'class-validator';
+import { Field, InputType, Int, ObjectType } from 'type-graphql';
 
 @ObjectType()
 export class User {
@@ -22,6 +22,14 @@ export class User {
 
   @prop({ ref: () => User })
   matches: Ref<User>[];
+
+  @Field(() => Int)
+  @prop({ required: true })
+  minRank: number;
+
+  @Field(() => Int)
+  @prop({ required: true })
+  maxRank: number;
 
   @Field(() => String)
   @prop({ required: true })
@@ -62,6 +70,19 @@ export class RightSwipeInput {
 export class LeftSwipeInput {
   @Field(() => String)
   leftSwipedID: string;
+}
+
+@InputType()
+export class EditUserInput {
+  @Min(0)
+  @Max(21)
+  @Field(() => Int, { nullable: true })
+  minRank?: number;
+
+  @Min(0)
+  @Max(21)
+  @Field(() => Int, { nullable: true })
+  maxRank?: number;
 }
 
 @ObjectType()

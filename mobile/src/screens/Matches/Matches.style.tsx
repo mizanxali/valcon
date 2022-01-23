@@ -15,7 +15,16 @@ export default StyleSheet.create({
     fontSize: 24,
     fontFamily: 'FiraSans-Bold',
     marginHorizontal: 12,
-    marginVertical: 7,
+    marginTop: 7,
+    marginBottom: 3,
+  },
+  description: {
+    color: theme.colors.white,
+    fontSize: 14,
+    fontFamily: 'FiraSans',
+    marginHorizontal: 12,
+    marginBottom: 7,
+    marginTop: 3,
   },
   matchesListViewWrapper: {},
   matchCard: {
@@ -49,5 +58,12 @@ export default StyleSheet.create({
     color: theme.colors.grey,
     fontSize: 16,
     fontFamily: 'FiraSans',
+  },
+  errorScreen: {
+    backgroundColor: theme.colors.background,
+    minHeight: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

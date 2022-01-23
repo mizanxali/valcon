@@ -50,6 +50,18 @@ export const EDIT_PROFILE_MUTATION = gql`
   }
 `;
 
+export const EDIT_USER_MUTATION = gql`
+  mutation editUser($minRank: Int!, $maxRank: Int!) {
+    editUser(input: {minRank: $minRank, maxRank: $maxRank}) {
+      _id
+      email
+      minRank
+      maxRank
+      createdAt
+    }
+  }
+`;
+
 export const LEFT_SWIPE_MUTATION = gql`
   mutation leftSwipe($leftSwipedID: String!) {
     leftSwipe(input: {leftSwipedID: $leftSwipedID})

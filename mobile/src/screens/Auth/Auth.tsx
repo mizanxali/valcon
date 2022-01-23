@@ -1,7 +1,7 @@
 import {useMutation} from '@apollo/client';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useContext, useState} from 'react';
-import {Button, Text, TextInput, View} from 'react-native';
+import {Button, Text, TextInput, ToastAndroid, View} from 'react-native';
 import {AuthContext} from '../../context/auth';
 import {CREATE_USER_MUTATION, LOGIN_MUTATION} from '../../graphql/mutations';
 import theme from '../../theme';
@@ -25,6 +25,7 @@ const AuthScreen = ({
     },
     onError(err) {
       console.log(err.graphQLErrors[0]);
+      ToastAndroid.show(err.graphQLErrors[0].message, ToastAndroid.SHORT);
     },
     variables: {
       email,
@@ -39,6 +40,7 @@ const AuthScreen = ({
     },
     onError(err) {
       console.log(err.graphQLErrors[0]);
+      ToastAndroid.show(err.graphQLErrors[0].message, ToastAndroid.SHORT);
     },
     variables: {
       email,

@@ -1,38 +1,34 @@
 import {useMutation, useQuery} from '@apollo/client';
-import React, {useState} from 'react';
-import {ActivityIndicator, Image, Pressable, Text, View} from 'react-native';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import VideoPlayer from 'react-native-video-player';
-import TinderCard from 'react-tinder-card';
-import {RANKS} from '../../constants/ranks';
-import {
-  LEFT_SWIPE_MUTATION,
-  RIGHT_SWIPE_MUTATION,
-} from '../../graphql/mutations';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import React from 'react';
+import {ActivityIndicator, Text, View} from 'react-native';
+import {EDIT_USER_MUTATION} from '../../graphql/mutations';
 import {GET_PROFILES_QUERY} from '../../graphql/queries';
-import theme from '../../theme';
+import {SwipeStackParamList} from '../../types';
 import styles from './Swipe.style';
+import SwipesScreen from './Swipes/Swipes';
+import SwipeSettingsScreen from './SwipeSettings/SwipeSettings';
 
-const SwipeScreen = () => {
-  const {data, loading, error} = useQuery(GET_PROFILES_QUERY, {
-    variables: {
-      minRank: 0,
-      maxRank: 21,
-      servers: ['Mumbai'],
-    },
-  });
+const Stack = createNativeStackNavigator<SwipeStackParamList>();
 
-  const [leftSwipe] = useMutation(LEFT_SWIPE_MUTATION, {
+const ProfileScreen = () => {
+  const {data, loading, error} = useQuery(GET_PROFILES_QUERY);
+
+  const [editUser] = useMutation(EDIT_USER_MUTATION, {
     onError(err) {
-      console.log(err.graphQLErrors[0]);
+      console.log(err.message);
     },
+    refetchQueries: [GET_PROFILES_QUERY],
   });
 
-  const [rightSwipe] = useMutation(RIGHT_SWIPE_MUTATION, {
-    onError(err) {
-      console.log(err.graphQLErrors[0]);
-    },
-  });
+  function applyFilters(minRank: number, maxRank: number) {
+    editUser({
+      variables: {
+        minRank,
+        maxRank,
+      },
+    });
+  }
 
   if (loading)
     return (
@@ -41,125 +37,29 @@ const SwipeScreen = () => {
       </View>
     );
 
-  if (data) {
-    const profiles = [...data.getProfiles];
-
-    const swipeHandler = (direction: string, swipedId: string) => {
-      if (direction === 'right') {
-        rightSwipe({
-          variables: {
-            rightSwipedID: swipedId,
-          },
-        });
-      } else if (direction === 'left') {
-        leftSwipe({
-          variables: {
-            leftSwipedID: swipedId,
-          },
-        });
-      }
-    };
-
-    const cardLeftScreenHandler = (swipedId: any) => {
-      //delete card
-    };
-
-    if (profiles.length === 0)
-      return (
-        <View style={styles.screen}>
-          <Text>You ran out of potential profiles...</Text>
-          <Text>Try changing your search filters.</Text>
-        </View>
-      );
-
+  if (data)
     return (
-      <View style={styles.screen}>
-        <View style={styles.titleWrapper}>
-          <Image
-            style={styles.logo}
-            source={require('../../../assets/img/valcon-logo.png')}
-          />
-          <Pressable onPress={() => console.log('settings')}>
-            <MaterialIcons
-              name="settings"
-              size={30}
-              color={theme.colors.white}
-            />
-          </Pressable>
-        </View>
-        <View style={styles.cardContainer}>
-          {profiles.map((profile, i) => {
-            const {
-              user,
-              riotID,
-              clip,
-              favoriteMap,
-              lookingToPlay,
-              rank,
-              server,
-              agents,
-            } = profile;
-
-            return (
-              <TinderCard
-                key={i}
-                preventSwipe={['up', 'down']}
-                onSwipe={dir => swipeHandler(dir, user)}
-                onCardLeftScreen={() => cardLeftScreenHandler(user)}>
-                <View style={styles.card}>
-                  <Text style={styles.title}>{riotID}</Text>
-                  <View style={styles.videoWrapper}>
-                    <VideoPlayer
-                      hideControlsOnStart
-                      autoplay
-                      loop
-                      video={{
-                        uri: clip,
-                      }}
-                      videoWidth={1600}
-                      videoHeight={900}
-                    />
-                  </View>
-                  <View style={styles.profileField}>
-                    <Text style={styles.heading}>Rank</Text>
-                    <Text style={styles.value}>{RANKS[rank]}</Text>
-                  </View>
-                  <View style={styles.profileField}>
-                    <Text style={styles.heading}>Server</Text>
-                    <Text style={styles.value}>{server}</Text>
-                  </View>
-                  <View style={styles.profileField}>
-                    <Text style={styles.heading}>Looking to play</Text>
-                    <Text style={styles.value}>{lookingToPlay}</Text>
-                  </View>
-                  <View style={styles.profileField}>
-                    <Text style={styles.heading}>Favorite map</Text>
-                    <Text style={styles.value}>{favoriteMap}</Text>
-                  </View>
-                  <View style={styles.agentsField}>
-                    <Text style={styles.heading}>Agents</Text>
-                    <View style={styles.agentsWrapper}>
-                      {agents.map((agent: string, i: number) => (
-                        <Text style={styles.agent} key={i}>
-                          {agent}
-                        </Text>
-                      ))}
-                    </View>
-                  </View>
-                </View>
-              </TinderCard>
-            );
-          })}
-        </View>
-      </View>
+      <Stack.Navigator>
+        <Stack.Screen name="Swipes" options={{headerShown: false}}>
+          {props => <SwipesScreen {...props} data={data.getProfiles} />}
+        </Stack.Screen>
+        <Stack.Group screenOptions={{presentation: 'modal'}}>
+          <Stack.Screen name="SwipeSettings" options={{headerShown: false}}>
+            {props => (
+              <SwipeSettingsScreen {...props} editSettings={applyFilters} />
+            )}
+          </Stack.Screen>
+        </Stack.Group>
+      </Stack.Navigator>
     );
-  }
+
+  if (error) console.log(error);
 
   return (
-    <View style={styles.screen}>
+    <View style={styles.errorScreen}>
       <Text>Something went wrong.</Text>
     </View>
   );
 };
 
-export default SwipeScreen;
+export default ProfileScreen;

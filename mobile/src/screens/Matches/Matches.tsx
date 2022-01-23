@@ -21,33 +21,16 @@ const MatchesScreen = () => {
       <View style={styles.screen}>
         <View style={styles.container}>
           <Text style={styles.title}>Matches</Text>
+          <Text style={styles.description}>
+            Use the Riot ID you see below to add them in-game!
+          </Text>
           <View style={styles.matchesListViewWrapper}>
             {matches.length ? (
-              <FlatList
-                data={[
-                  ...matches,
-                  ...matches,
-                  ...matches,
-                  ...matches,
-                  ...matches,
-                  ...matches,
-                  ...matches,
-                  ...matches,
-                  ...matches,
-                  ...matches,
-                  ...matches,
-                  ...matches,
-                  ...matches,
-                  ...matches,
-                  ...matches,
-                  ...matches,
-                  ...matches,
-                  ...matches,
-                ]}
-                renderItem={MatchCard}
-              />
+              <FlatList data={[...matches]} renderItem={MatchCard} />
             ) : (
-              <Text>No matches</Text>
+              <View style={styles.errorScreen}>
+                <Text>No matches yet!</Text>
+              </View>
             )}
           </View>
         </View>
@@ -56,7 +39,7 @@ const MatchesScreen = () => {
   }
 
   return (
-    <View style={styles.screen}>
+    <View style={styles.errorScreen}>
       <Text>Something went wrong.</Text>
     </View>
   );

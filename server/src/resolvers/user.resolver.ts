@@ -1,6 +1,7 @@
 import { Arg, Authorized, Ctx, Mutation, Query, Resolver } from 'type-graphql';
 import {
   CreateUserInput,
+  EditUserInput,
   LeftSwipeInput,
   LoginInput,
   Match,
@@ -40,9 +41,11 @@ export default class UserResolver {
     return this.userService.leftSwipe(input, user);
   }
 
+  @Authorized()
   @Query(() => User)
   me(@Ctx() context: Context) {
-    return context.user;
+    const user = context.user!;
+    return this.userService.me(user);
   }
 
   @Authorized()
@@ -50,5 +53,12 @@ export default class UserResolver {
   getMatches(@Ctx() context: Context) {
     const user = context.user!;
     return this.userService.getMatches(user);
+  }
+
+  @Authorized()
+  @Mutation(() => User)
+  editUser(@Arg('input') input: EditUserInput, @Ctx() context: Context) {
+    const user = context.user!;
+    return this.userService.editUser(input, user);
   }
 }

@@ -1,14 +1,19 @@
+import {useApolloClient} from '@apollo/client';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import React from 'react';
-import {Pressable, ScrollView, Text, View} from 'react-native';
+import React, {useContext} from 'react';
+import {Button, Pressable, ScrollView, Text, View} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import VideoPlayer from 'react-native-video-player';
+import {RANKS} from '../../../constants/ranks';
+import {AuthContext} from '../../../context/auth';
 import theme from '../../../theme';
 import {ProfileStackParamList} from '../../../types';
-import {RANKS} from '../../../constants/ranks';
 import styles from './ViewProfile.style';
 
 const ViewProfile = ({navigation, data}: IViewProfileProps) => {
+  const context = useContext(AuthContext);
+  const client = useApolloClient();
+
   let {
     riotID,
     tagline,
@@ -22,6 +27,11 @@ const ViewProfile = ({navigation, data}: IViewProfileProps) => {
   } = data;
 
   const showClip = clip.length > 0;
+
+  function signOutHandler() {
+    context.logout();
+    client.clearStore();
+  }
 
   return (
     <ScrollView style={styles.screen}>
@@ -107,6 +117,11 @@ const ViewProfile = ({navigation, data}: IViewProfileProps) => {
             )}
           </View>
         </View>
+        <Button
+          title="Sign Out"
+          onPress={signOutHandler}
+          color={theme.colors.primary}
+        />
       </View>
     </ScrollView>
   );

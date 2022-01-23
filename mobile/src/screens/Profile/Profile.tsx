@@ -33,7 +33,7 @@ const ProfileScreen = () => {
     );
 
   return (
-    <View style={styles.screen}>
+    <View style={styles.errorScreen}>
       <Text>Something went wrong.</Text>
     </View>
   );

@@ -1,9 +1,11 @@
 import {
   ApolloClient,
   ApolloProvider,
-  createHttpLink,
+  concat,
+  HttpLink,
   InMemoryCache,
 } from '@apollo/client';
+import {setContext} from '@apollo/client/link/context';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React, {useContext} from 'react';
@@ -11,35 +13,32 @@ import {AuthContext, AuthProvider} from './context/auth';
 import AuthScreen from './screens/Auth/Auth';
 import HomeScreen from './screens/Home/Home';
 import {RootStackParamList} from './types';
-
-const link = createHttpLink({
-  uri: 'http://192.168.0.103:4000/graphql',
-  headers: {
-    accesstoken:
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWU1NjE5N2QxMTQ1ZTQxY2JlMWI5NGIiLCJlbWFpbCI6Im52eWF5QG9rLmNvbSIsImNyZWF0ZWRBdCI6IjIwMjItMDEtMTdUMTI6MzE6MTkuNjAwWiIsImlhdCI6MTY0MjYyODk3MCwiZXhwIjoxNjQyOTg4OTcwfQ.-FYn3wZQhQwviDi1KRyvdrU2zKNzXlrXlUqqH_r4fYY',
-  },
-});
-
-const client = new ApolloClient({
-  link,
-  cache: new InMemoryCache(),
-});
+import {getData} from './utils/asyncStorage';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const App = () => {
+  const httpLink = new HttpLink({uri: 'http://192.168.0.103:4000/graphql'});
+
+  const authHeader = setContext(
+    request =>
+      new Promise((success, fail) => {
+        getData('token').then(token =>
+          success({headers: {accessToken: token}}),
+        );
+      }),
+  );
+
+  const client = new ApolloClient({
+    link: concat(authHeader, httpLink),
+    cache: new InMemoryCache(),
+  });
+
   return (
     <ApolloProvider client={client}>
       <AuthProvider>
         <NavigationContainer>
-          {/* <Redirect /> */}
-          <Stack.Navigator>
-            <Stack.Screen
-              name="Home"
-              component={HomeScreen}
-              options={{headerShown: false}}
-            />
-          </Stack.Navigator>
+          <Redirect />
         </NavigationContainer>
       </AuthProvider>
     </ApolloProvider>
@@ -65,11 +64,6 @@ const Redirect = () => {
         <Stack.Screen
           name="Auth"
           component={AuthScreen}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="Home"
-          component={HomeScreen}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

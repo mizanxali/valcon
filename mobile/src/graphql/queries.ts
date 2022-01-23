@@ -19,10 +19,8 @@ export const GET_PROFILE_QUERY = gql`
 `;
 
 export const GET_PROFILES_QUERY = gql`
-  query ($minRank: Int!, $maxRank: Int!, $servers: [String!]!) {
-    getProfiles(
-      input: {minRank: $minRank, maxRank: $maxRank, servers: $servers}
-    ) {
+  {
+    getProfiles {
       _id
       user
       riotID
@@ -43,6 +41,18 @@ export const GET_MATCHES_QUERY = gql`
       _id
       riotID
       tagline
+    }
+  }
+`;
+
+export const ME_QUERY = gql`
+  {
+    me {
+      _id
+      email
+      createdAt
+      minRank
+      maxRank
     }
   }
 `;
