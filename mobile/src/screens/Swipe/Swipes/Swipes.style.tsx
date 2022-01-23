@@ -101,4 +101,19 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  emptyProfileScreen: {
+    margin: 7,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  emptyProfileText: {
+    color: theme.colors.white,
+    fontSize: 16,
+    fontWeight: '500',
+    marginHorizontal: 12,
+    marginVertical: 7,
+    fontFamily: 'FiraSans',
+    textAlign: 'center',
+  },
 });

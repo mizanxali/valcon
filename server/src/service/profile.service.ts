@@ -66,7 +66,7 @@ class ProfileService {
         - user has not already been swiped on/matched with currentUser
         - discoverable == true
         - minRank <= Rank <= maxRank
-        - server is equal to any of the selected ones
+        - server == currentUser.server
         - lookingToPlay == currentUser.lookingToPlay */
 
     const profiles = await ProfileModel.find(

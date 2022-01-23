@@ -24,7 +24,7 @@ const App = () => {
     request =>
       new Promise((success, fail) => {
         getData('token').then(token =>
-          success({headers: {accessToken: token}}),
+          success({headers: {accesstoken: token}}),
         );
       }),
   );

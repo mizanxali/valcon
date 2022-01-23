@@ -1,6 +1,6 @@
 import {useMutation} from '@apollo/client';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import React, {useRef} from 'react';
+import React, {useState} from 'react';
 import {Image, Pressable, Text, View} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import VideoPlayer from 'react-native-video-player';
@@ -14,7 +14,9 @@ import theme from '../../../theme';
 import {SwipeStackParamList} from '../../../types';
 import styles from './Swipes.style';
 
-const SwipesScreen = ({navigation, data}: ISwipesProps) => {
+const SwipesScreen = ({navigation, data: profiles}: ISwipesProps) => {
+  const [currentProfileIndex, setCurrentProfileIndex] = useState(0);
+
   const [leftSwipe] = useMutation(LEFT_SWIPE_MUTATION, {
     onError(err) {
       console.log(err.graphQLErrors[0]);
@@ -27,9 +29,9 @@ const SwipesScreen = ({navigation, data}: ISwipesProps) => {
     },
   });
 
-  const profiles = [...data];
-
   const swipeHandler = (direction: string, swipedId: string) => {
+    setCurrentProfileIndex(currentProfileIndex + 1);
+
     if (direction === 'right') {
       rightSwipe({
         variables: {
@@ -49,8 +51,6 @@ const SwipesScreen = ({navigation, data}: ISwipesProps) => {
     //delete card
   };
 
-  const videoPlayerRef = useRef(null);
-
   if (profiles.length === 0)
     return (
       <View style={styles.screen}>
@@ -67,8 +67,15 @@ const SwipesScreen = ({navigation, data}: ISwipesProps) => {
             />
           </Pressable>
         </View>
-        <Text>You ran out of potential profiles...</Text>
-        <Text>Try changing your search filters.</Text>
+        <View style={styles.emptyProfileScreen}>
+          <Text style={styles.emptyProfileText}>
+            You ran out of potential profiles...
+          </Text>
+          <Text style={styles.emptyProfileText}>
+            Make sure you have completed setting up your profile and try
+            changing your search filters from the settings above.
+          </Text>
+        </View>
       </View>
     );
 
@@ -84,7 +91,7 @@ const SwipesScreen = ({navigation, data}: ISwipesProps) => {
         </Pressable>
       </View>
       <View style={styles.cardContainer}>
-        {profiles.map((profile, i) => {
+        {profiles.map((profile: any, i: number) => {
           const {
             user,
             riotID,
@@ -105,16 +112,19 @@ const SwipesScreen = ({navigation, data}: ISwipesProps) => {
               <View style={styles.card}>
                 <Text style={styles.title}>{riotID}</Text>
                 <View style={styles.videoWrapper}>
-                  <VideoPlayer
-                    ref={videoPlayerRef}
-                    hideControlsOnStart
-                    loop
-                    video={{
-                      uri: clip,
-                    }}
-                    videoWidth={1600}
-                    videoHeight={900}
-                  />
+                  {currentProfileIndex === profiles.length - i - 1 && (
+                    <VideoPlayer
+                      loop
+                      repeat
+                      hideControlsOnStart
+                      video={{
+                        uri: clip,
+                      }}
+                      videoWidth={1600}
+                      videoHeight={900}
+                      autoplay
+                    />
+                  )}
                 </View>
                 <View style={styles.profileField}>
                   <Text style={styles.heading}>Rank</Text>

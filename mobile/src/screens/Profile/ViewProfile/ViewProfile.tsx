@@ -26,7 +26,7 @@ const ViewProfile = ({navigation, data}: IViewProfileProps) => {
     server,
   } = data;
 
-  const showClip = clip.length > 0;
+  const showClip = clip ? clip.length > 0 : false;
 
   function signOutHandler() {
     context.logout();
