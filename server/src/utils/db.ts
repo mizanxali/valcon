@@ -3,7 +3,7 @@ import config from 'config';
 
 export async function connectDB() {
   try {
-    await mongoose.connect(config.get('dbUri'));
+    await mongoose.connect(process.env.dbUri as string);
     console.log('Database connected');
   } catch (err) {
     console.log(err);

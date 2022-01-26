@@ -1,7 +1,7 @@
 import config from 'config';
 import jwt from 'jsonwebtoken';
 
-const jwtSecret = config.get<string>('jwtSecret');
+const jwtSecret = process.env.jwtSecret as string;
 
 export function signJwt(payload: object) {
   return jwt.sign(payload, jwtSecret, { expiresIn: 360000 });

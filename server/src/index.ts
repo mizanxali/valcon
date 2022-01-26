@@ -13,7 +13,7 @@ import { connectDB } from './utils/db';
 import { verifyJwt } from './utils/jwt';
 import authChecker from './utils/authChecker';
 
-const PORT = process.env.port || 4000;
+const PORT = process.env.PORT || 4000;
 
 const main = async () => {
   const schema = await buildSchema({
