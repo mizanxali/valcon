@@ -18,7 +18,9 @@ import {getData} from './utils/asyncStorage';
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const App = () => {
-  const httpLink = new HttpLink({uri: 'http://192.168.0.103:4000/graphql'});
+  const httpLink = new HttpLink({
+    uri: 'https://valcon-server.herokuapp.com/graphql',
+  });
 
   const authHeader = setContext(
     request =>
