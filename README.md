@@ -1,4 +1,4 @@
-# VALCON
+# VALCON (currently in beta)
 
 Valcon is an Android app to find Valorant players to match and play with, by swiping right or left on their gameplay clips. In-game Riot IDs are hidden from players until they match!
 
