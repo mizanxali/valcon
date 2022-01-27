@@ -7,4 +7,4 @@ Valcon is an Android app to find Valorant players to match and play with, by swi
 ## Tech Stack
 Back-end: Typescript, Apollo GraphQL Server, TypeGraphQL, MongoDB, Typegoose
 
-Front-end: React Native, Apollo GraphQL Client
+Front-end: Typescript, React Native, Apollo GraphQL Client
